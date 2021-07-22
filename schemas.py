@@ -41,6 +41,27 @@ class StudentModel(BaseModel):
         }
 
 
+class RoadModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    from_obj: str = Field(...)
+    to_obj: str = Field(...)
+    name: str = Field(...)
+    energy: float = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Big forest route",
+                "from_obj": "Ogrimmar",
+                "to_obj": "Stormwind",
+                "energy": "13.4",
+            }
+        }
+
+
 class UpdateStudentModel(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
@@ -56,5 +77,24 @@ class UpdateStudentModel(BaseModel):
                 "email": "jdoe@example.com",
                 "course": "Experiments, Science, and Fashion in Nanophotonics",
                 "gpa": "3.0",
+            }
+        }
+
+
+class UpdateRoadModel(BaseModel):
+    from_obj: Optional[str]
+    to_obj: Optional[str]
+    name: Optional[str]
+    energy: Optional[float]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Big forest route",
+                "from_obj": "Ogrimmar",
+                "to_obj": "Stormwind",
+                "energy": "13.4",
             }
         }
