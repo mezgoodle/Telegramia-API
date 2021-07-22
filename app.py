@@ -21,12 +21,28 @@ async def create_student(student: StudentModel = Body(...)):
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_student)
 
 
+@app.post("/road", response_description="Add new road", response_model=RoadModel)
+async def create_road(road: RoadModel = Body(...)):
+    road = jsonable_encoder(road)
+    new_road = await db["roads"].insert_one(road)
+    created_road = await db["roads"].find_one({"_id": new_road.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_road)
+
+
 @app.get(
     "/", response_description="List all students", response_model=List[StudentModel]
 )
 async def list_students():
     students = await db["students"].find().to_list(1000)
     return students
+
+
+@app.get(
+    "/roads", response_description="List all roads", response_model=List[RoadModel]
+)
+async def list_roads():
+    roads = await db["roads"].find().to_list(1000)
+    return roads
 
 
 @app.get(
