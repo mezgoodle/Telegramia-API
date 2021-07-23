@@ -20,12 +20,22 @@ class PyObjectId(ObjectId):
         field_schema.update(type="string")
 
 
-class StudentModel(BaseModel):
+class PlayerModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
-    email: EmailStr = Field(...)
-    course: str = Field(...)
-    gpa: float = Field(..., le=4.0)
+    level: float = Field(...)
+    experience: float = Field(...)
+    health: float = Field(...)
+    mana: float = Field(...)
+    strength: float = Field(...)
+    agility: float = Field(...)
+    intuition: float = Field(...)
+    intelligence: float = Field(...)
+    hero_class: str = Field(...)
+    nation: str = Field(...)
+    money: float = Field(..., le=4.0)
+    items: list = Field(...)
+    mount: dict = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -34,9 +44,19 @@ class StudentModel(BaseModel):
         schema_extra = {
             "example": {
                 "name": "Jane Doe",
-                "email": "jdoe@example.com",
-                "course": "Experiments, Science, and Fashion in Nanophotonics",
-                "gpa": "3.0",
+                "level": 3,
+                "experience": 45,
+                'health': 100.0,
+                'mana': 30.0,
+                "strength": 11.4,
+                "agility": 3.2,
+                'intuition': 55.1,
+                'intelligence': 34.0,
+                'hero_class': 'paladin',
+                'nation': 'Priaria',
+                'money': 123.65,
+                'items': ['wood shield', 'helmet'],
+                'mount': {'name': 'Bob', 'type': 'horse', 'bonus': 12}
             }
         }
 
@@ -62,7 +82,74 @@ class RoadModel(BaseModel):
         }
 
 
-class UpdateStudentModel(BaseModel):
+class CountryModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    description: str = Field(...)
+    capital: str = Field(...)
+    population: int = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Priaria",
+                "description": "Big country",
+                "capital": "Stormwind",
+                "population": 11234,
+            }
+        }
+
+
+class ItemModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    characteristic: str = Field(...)
+    bonus: float = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Wood helmet",
+                "characteristic": "strength",
+                "bonus": 13.3,
+            }
+        }
+
+
+class CityModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    is_capital: bool = Field(...)
+    market: bool = Field(...)
+    academy: bool = Field(...)
+    temple: bool = Field(...)
+    tavern: bool = Field(...)
+    menagerie: bool = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Stormwind",
+                "is_capital": True,
+                'market': True,
+                'academy': False,
+                'temple': False,
+                'tavern': True,
+                'menagerie': True
+            }
+        }
+
+
+class UpdatePlayerModel(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
     course: Optional[str]
@@ -98,3 +185,15 @@ class UpdateRoadModel(BaseModel):
                 "energy": "13.4",
             }
         }
+
+
+class UpdateCountryModel(BaseModel):
+    pass
+
+
+class UpdateItemModel(BaseModel):
+    pass
+
+
+class UpdateCityModel(BaseModel):
+    pass

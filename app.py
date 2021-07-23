@@ -13,8 +13,8 @@ client = motor.motor_asyncio.AsyncIOMotorClient(f'mongodb+srv://mezgoodle:{DB_PA
 db = client['Telegramia']
 
 
-@app.post("/", response_description="Add new student", response_model=StudentModel)
-async def create_student(student: StudentModel = Body(...)):
+@app.post("/", response_description="Add new student", response_model=PlayerModel)
+async def create_student(student: PlayerModel = Body(...)):
     student = jsonable_encoder(student)
     new_student = await db["students"].insert_one(student)
     created_student = await db["students"].find_one({"_id": new_student.inserted_id})
@@ -30,7 +30,7 @@ async def create_road(road: RoadModel = Body(...)):
 
 
 @app.get(
-    "/", response_description="List all students", response_model=List[StudentModel]
+    "/", response_description="List all students", response_model=List[PlayerModel]
 )
 async def list_students():
     students = await db["students"].find().to_list(1000)
@@ -46,7 +46,7 @@ async def list_roads():
 
 
 @app.get(
-    "/{id}", response_description="Get a single student", response_model=StudentModel
+    "/{id}", response_description="Get a single student", response_model=PlayerModel
 )
 async def show_student(id: str):
     if (student := await db["students"].find_one({"_id": id})) is not None:
@@ -55,8 +55,8 @@ async def show_student(id: str):
     raise HTTPException(status_code=404, detail=f"Student {id} not found")
 
 
-@app.put("/{id}", response_description="Update a student", response_model=StudentModel)
-async def update_student(id: str, student: UpdateStudentModel = Body(...)):
+@app.put("/{id}", response_description="Update a student", response_model=PlayerModel)
+async def update_student(id: str, student: UpdatePlayerModel = Body(...)):
     student = {k: v for k, v in student.dict().items() if v is not None}
 
     if len(student) >= 1:
