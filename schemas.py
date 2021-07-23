@@ -33,7 +33,7 @@ class PlayerModel(BaseModel):
     intelligence: float = Field(...)
     hero_class: str = Field(...)
     nation: str = Field(...)
-    money: float = Field(..., le=4.0)
+    money: float = Field(...)
     items: list = Field(...)
     mount: dict = Field(...)
 
