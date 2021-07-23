@@ -22,6 +22,7 @@ class PyObjectId(ObjectId):
 
 class PlayerModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    user_id: str = Field(...)
     name: str = Field(...)
     level: float = Field(...)
     experience: float = Field(...)
@@ -43,6 +44,7 @@ class PlayerModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
+                'user_id': '34344334',
                 "name": "Jane Doe",
                 "level": 3,
                 "experience": 45,
