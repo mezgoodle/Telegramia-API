@@ -9,9 +9,9 @@ from database import create_document, get_all_objects, get_object, update_object
 app = FastAPI()
 
 
-@app.post("/", response_description="Add new student", response_model=PlayerModel)
-async def create_student(student: PlayerModel = Body(...)):
-    return await create_document(student, 'students')
+@app.post("/player", response_description="Add new player", response_model=PlayerModel)
+async def create_player(player: PlayerModel = Body(...)):
+    return await create_document(player, 'players')
 
 
 @app.post("/road", response_description="Add new road", response_model=RoadModel)
@@ -19,12 +19,27 @@ async def create_road(road: RoadModel = Body(...)):
     return await create_document(road, 'roads')
 
 
+@app.post("/country", response_description="Add new country", response_model=CountryModel)
+async def create_country(country: CountryModel = Body(...)):
+    return await create_document(country, 'countries')
+
+
+@app.post("/item", response_description="Add new item", response_model=ItemModel)
+async def create_item(item: ItemModel = Body(...)):
+    return await create_document(item, 'items')
+
+
+@app.post("/city", response_description="Add new city", response_model=CityModel)
+async def create_city(city: CityModel = Body(...)):
+    return await create_document(city, 'cities')
+
+
 @app.get(
-    "/", response_description="List all students", response_model=List[PlayerModel]
+    "/players", response_description="List all players", response_model=List[PlayerModel]
 )
-async def list_students():
-    students = await get_all_objects('students')
-    return students
+async def list_players():
+    players = await get_all_objects('players')
+    return players
 
 
 @app.get(
@@ -36,17 +51,17 @@ async def list_roads():
 
 
 @app.get(
-    "/{id}", response_description="Get a single student", response_model=PlayerModel
+    "/players/{id}", response_description="Get a single player", response_model=PlayerModel
 )
-async def show_student(id: str):
-    return await get_object(id, 'students')
+async def show_player(id: str):
+    return await get_object(id, 'players')
 
 
-@app.put("/{id}", response_description="Update a student", response_model=UpdatePlayerModel)
-async def update_student(id: str, student: UpdatePlayerModel = Body(...)):
-    return await update_object(id, student, 'students')
+@app.put("/players/{id}", response_description="Update a player", response_model=UpdatePlayerModel)
+async def update_player(id: str, player: UpdatePlayerModel = Body(...)):
+    return await update_object(id, player, 'players')
 
 
-@app.delete("/{id}", response_description="Delete a student")
-async def delete_student(id: str):
-    return await delete_object(id, 'students')
+@app.delete("/players/{id}", response_description="Delete a player")
+async def delete_player(id: str):
+    return await delete_object(id, 'players')
