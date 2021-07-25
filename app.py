@@ -51,6 +51,14 @@ async def list_roads():
 
 
 @app.get(
+    "/countries", response_description="List all countries", response_model=List[CountryModel]
+)
+async def list_countries():
+    countries = await get_all_objects('countries')
+    return countries
+
+
+@app.get(
     "/players/{id}", response_description="Get a single player", response_model=PlayerModel
 )
 async def show_player(id: str):
