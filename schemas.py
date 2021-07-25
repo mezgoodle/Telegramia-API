@@ -100,7 +100,7 @@ class CountryModel(BaseModel):
                 "name": "Priaria",
                 "description": "Big country",
                 "capital": "Stormwind",
-                "population": 11234,
+                "population": 0,
             }
         }
 
