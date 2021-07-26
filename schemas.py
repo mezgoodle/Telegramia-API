@@ -37,6 +37,7 @@ class PlayerModel(BaseModel):
     money: float = Field(...)
     items: list = Field(...)
     mount: dict = Field(...)
+    current_state: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -58,7 +59,8 @@ class PlayerModel(BaseModel):
                 'nation': 'Priaria',
                 'money': 123.65,
                 'items': ['wood shield', 'helmet'],
-                'mount': {'name': 'Bob', 'type': 'horse', 'bonus': 12}
+                'mount': {'name': 'Bob', 'type': 'horse', 'bonus': 12},
+                'current_state': 'Stormwind'
             }
         }
 
