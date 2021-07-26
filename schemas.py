@@ -153,6 +153,28 @@ class CityModel(BaseModel):
         }
 
 
+class HeroClassModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    characteristics: dict = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": 'Воїн',
+                "characteristics": {
+                    'strength': 0.0,
+                    'agility': 0.0,
+                    'intuition': 0.0,
+                    'intelligence': 0.0
+                }
+            }
+        }
+
+
 class UpdatePlayerModel(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
