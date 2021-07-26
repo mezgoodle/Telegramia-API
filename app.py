@@ -34,6 +34,11 @@ async def create_city(city: CityModel = Body(...)):
     return await create_document(city, 'cities')
 
 
+@app.post("/heroclass", response_description="Add new class", response_model=HeroClassModel)
+async def create_class(hero_class: HeroClassModel = Body(...)):
+    return await create_document(hero_class, 'classes')
+
+
 @app.get(
     "/players", response_description="List all players", response_model=List[PlayerModel]
 )
@@ -56,6 +61,14 @@ async def list_roads():
 async def list_countries():
     countries = await get_all_objects('countries')
     return countries
+
+
+@app.get(
+    "/heroclasses", response_description="List all classes", response_model=List[HeroClassModel]
+)
+async def list_classes():
+    classes = await get_all_objects('classes')
+    return classes
 
 
 @app.get(
