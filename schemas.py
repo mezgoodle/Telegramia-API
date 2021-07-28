@@ -129,6 +129,7 @@ class ItemModel(BaseModel):
 class CityModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
+    country: str = Field(...)
     is_capital: bool = Field(...)
     market: bool = Field(...)
     academy: bool = Field(...)
@@ -143,6 +144,7 @@ class CityModel(BaseModel):
         schema_extra = {
             "example": {
                 "name": "Stormwind",
+                'country': 'Alliance',
                 "is_capital": True,
                 'market': True,
                 'academy': False,
