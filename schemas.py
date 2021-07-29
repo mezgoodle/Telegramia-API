@@ -27,7 +27,7 @@ class PlayerModel(BaseModel):
     level: float = Field(...)
     experience: float = Field(...)
     health: float = Field(...)
-    mana: float = Field(...)
+    energy: float = Field(...)
     strength: float = Field(...)
     agility: float = Field(...)
     intuition: float = Field(...)
@@ -50,7 +50,7 @@ class PlayerModel(BaseModel):
                 "level": 3,
                 "experience": 45,
                 'health': 100.0,
-                'mana': 30.0,
+                'energy': 30.0,
                 "strength": 11.4,
                 "agility": 3.2,
                 'intuition': 55.1,
