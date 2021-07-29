@@ -1,6 +1,4 @@
-from fastapi import FastAPI, Body, HTTPException, status
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
+from fastapi import FastAPI, Body
 from typing import List
 
 from schemas import *
