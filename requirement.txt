@@ -10,7 +10,7 @@ idna==2.10
 mccabe==0.6.1
 motor==2.3.0
 mypy-extensions==0.4.3
-pathspec==0.8.1
+pathspec==0.9.0
 pycodestyle==2.6.0
 pydantic==1.7.3
 pyflakes==2.2.0
