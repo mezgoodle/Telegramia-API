@@ -76,6 +76,27 @@ async def show_player(id: str):
     return await get_object(id, 'players')
 
 
+@app.get(
+    "/roads/{id}", response_description="Get a single road", response_model=RoadModel
+)
+async def show_road(id: str):
+    return await get_object(id, 'roads')
+
+
+@app.get(
+    "/countries/{id}", response_description="Get a single country", response_model=CountryModel
+)
+async def show_country(id: str):
+    return await get_object(id, 'countries')
+
+
+@app.get(
+    "/heroclasses/{id}", response_description="Get a single class", response_model=HeroClassModel
+)
+async def show_class(id: str):
+    return await get_object(id, 'classes')
+
+
 @app.put("/players/{id}", response_description="Update a player", response_model=UpdatePlayerModel)
 async def update_player(id: str, player: UpdatePlayerModel = Body(...)):
     return await update_object(id, player, 'players')
