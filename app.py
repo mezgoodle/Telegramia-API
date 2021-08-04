@@ -105,3 +105,18 @@ async def update_player(id: str, player: UpdatePlayerModel = Body(...)):
 @app.delete("/players/{id}", response_description="Delete a player")
 async def delete_player(id: str):
     return await delete_object(id, 'players')
+
+
+@app.delete("/roads/{id}", response_description="Delete a road")
+async def delete_road(id: str):
+    return await delete_object(id, 'roads')
+
+
+@app.delete("/countries/{id}", response_description="Delete a country")
+async def delete_country(id: str):
+    return await delete_object(id, 'countries')
+
+
+@app.delete("/heroclasses/{id}", response_description="Delete a class")
+async def delete_class(id: str):
+    return await delete_object(id, 'classes')
