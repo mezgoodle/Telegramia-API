@@ -113,6 +113,7 @@ class ItemModel(BaseModel):
     characteristic: str = Field(...)
     bonus: float = Field(...)
     city: str = Field(...)
+    price: float = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -124,6 +125,7 @@ class ItemModel(BaseModel):
                 "characteristic": "strength",
                 "bonus": 13.3,
                 "city": "Stormwind",
+                "price": 34.0,
             }
         }
 
