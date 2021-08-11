@@ -37,6 +37,11 @@ async def create_class(hero_class: HeroClassModel = Body(...)):
     return await create_document(hero_class, 'classes')
 
 
+@app.post("/horse", response_description="Add new horse", response_model=HorseModel)
+async def create_horse(horse: HorseModel = Body(...)):
+    return await create_document(horse, 'horses')
+
+
 @app.get(
     "/players", response_description="List all players", response_model=List[PlayerModel]
 )
@@ -70,6 +75,14 @@ async def list_classes():
 
 
 @app.get(
+    "/horses", response_description="List all horses", response_model=List[HorseModel]
+)
+async def list_horses():
+    horses = await get_all_objects('horses')
+    return horses
+
+
+@app.get(
     "/players/{id}", response_description="Get a single player", response_model=PlayerModel
 )
 async def show_player(id: str):
@@ -95,6 +108,13 @@ async def show_country(id: str):
 )
 async def show_class(id: str):
     return await get_object(id, 'classes')
+
+
+@app.get(
+    "/horses/{id}", response_description="Get a single horse", response_model=HorseModel
+)
+async def show_horse(id: str):
+    return await get_object(id, 'horses')
 
 
 @app.put("/players/{id}", response_description="Update a player", response_model=UpdatePlayerModel)
