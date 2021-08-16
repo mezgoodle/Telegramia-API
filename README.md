@@ -95,7 +95,10 @@ Let people know how they can contribute into your project. A contributing guidel
 
 ## Credits :cat::handshake:
 
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
+Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+
+https://www.youtube.com/watch?v=tLKKmouUams
+https://youtu.be/7t2alSnE2-I?t=3528
 
 ## License :bookmark:
 
