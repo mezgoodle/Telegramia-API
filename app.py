@@ -152,25 +152,46 @@ async def update_player(identifier: Optional[str] = None, nickname: Optional[str
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.delete('/players/{id}', response_description='Delete a player',
+@app.delete('/player', response_description='Delete a player',
             status_code=status.HTTP_200_OK)
-async def delete_player(identifier: str):
-    return await delete_object(identifier, 'players')
+async def delete_player(identifier: Optional[str] = None,
+                        nickname: Optional[str] = None, username: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'players')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.delete('/roads/{id}', response_description='Delete a road',
+@app.delete('/road', response_description='Delete a road',
             status_code=status.HTTP_200_OK)
-async def delete_road(identifier: str):
-    return await delete_object(identifier, 'roads')
+async def delete_road(identifier: Optional[str] = None, name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'roads')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.delete('/countries/{id}', response_description='Delete a country',
+@app.delete('/country', response_description='Delete a country',
             status_code=status.HTTP_200_OK)
-async def delete_country(identifier: str):
-    return await delete_object(identifier, 'countries')
+async def delete_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'countries')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.delete('/heroclasses/{id}', response_description='Delete a class',
+@app.delete('/heroclass', response_description='Delete a class',
             status_code=status.HTTP_200_OK)
-async def delete_class(identifier: str):
-    return await delete_object(identifier, 'classes')
+async def delete_class(identifier: Optional[str] = None, class_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'class_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'classes')
+    raise HTTPException(status_code=404, detail='Set some parameters')

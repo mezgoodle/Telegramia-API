@@ -26,7 +26,7 @@ async def get_all_objects(collection: str):
 async def get_object(query: dict, collection: str):
     if (object := await db[collection].find_one(query)) is not None:
         return object
-    raise HTTPException(status_code=404, detail=f"Object has not found")
+    raise HTTPException(status_code=404, detail='Object has not found')
 
 
 async def update_object(query: dict, object: BaseModel, collection: str):
@@ -42,13 +42,13 @@ async def update_object(query: dict, object: BaseModel, collection: str):
     if (existing_object := await db[collection].find_one(query)) is not None:
         return existing_object
 
-    raise HTTPException(status_code=404, detail=f"Object {id} not found")
+    raise HTTPException(status_code=404, detail='Object has not found')
 
 
-async def delete_object(id: str, collection: str):
-    delete_result = await db[collection].delete_one({"_id": id})
+async def delete_object(query: dict, collection: str):
+    delete_result = await db[collection].delete_one(query)
 
     if delete_result.deleted_count == 1:
         return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
 
-    raise HTTPException(status_code=404, detail=f"Object {id} not found")
+    raise HTTPException(status_code=404, detail='Object has not found')
