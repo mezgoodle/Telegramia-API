@@ -29,19 +29,17 @@ async def get_object(query: dict, collection: str):
     raise HTTPException(status_code=404, detail=f"Object has not found")
 
 
-async def update_object(id: str, object: BaseModel, collection: str):
+async def update_object(query: dict, object: BaseModel, collection: str):
     object = {k: v for k, v in object.dict().items() if v is not None}
 
     if len(object) >= 1:
-        update_result = await db[collection].update_one({"_id": id}, {"$set": object})
+        update_result = await db[collection].update_one(query, {"$set": object})
 
         if update_result.modified_count == 1:
-            if (
-                    updated_object := await db[collection].find_one({"_id": id})
-            ) is not None:
+            if (updated_object := await db[collection].find_one(query)) is not None:
                 return updated_object
 
-    if (existing_object := await db[collection].find_one({"_id": id})) is not None:
+    if (existing_object := await db[collection].find_one(query)) is not None:
         return existing_object
 
     raise HTTPException(status_code=404, detail=f"Object {id} not found")

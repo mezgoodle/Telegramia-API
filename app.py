@@ -140,10 +140,16 @@ async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.put('/players/{id}', response_description='Update a player', response_model=UpdatePlayerModel,
+@app.put('/player', response_description='Update a player', response_model=UpdatePlayerModel,
          status_code=status.HTTP_200_OK)
-async def update_player(identifier: str, player: UpdatePlayerModel = Body(...)):
-    return await update_object(identifier, player, 'players')
+async def update_player(identifier: Optional[str] = None, nickname: Optional[str] = None,
+                        username: Optional[str] = None, player: UpdatePlayerModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, player, 'players')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
 @app.delete('/players/{id}', response_description='Delete a player',
