@@ -23,10 +23,10 @@ async def get_all_objects(collection: str):
     return objects
 
 
-async def get_object(id: str, collection: str):
-    if (object := await db[collection].find_one({"_id": id})) is not None:
+async def get_object(query: dict, collection: str):
+    if (object := await db[collection].find_one(query)) is not None:
         return object
-    raise HTTPException(status_code=404, detail=f"Object {id} not found")
+    raise HTTPException(status_code=404, detail=f"Object has not found")
 
 
 async def update_object(id: str, object: BaseModel, collection: str):

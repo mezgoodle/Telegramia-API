@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Body, status
 from typing import List
 
-from schemas import *
+from fastapi import FastAPI, Body, status
+
 from database import create_document, get_all_objects, get_object, update_object, delete_object
+from schemas import *
 
 app = FastAPI()
 
@@ -84,10 +85,14 @@ async def list_horses():
     return horses
 
 
-@app.get('/players', response_description='Get a single player', response_model=PlayerModel,
+@app.get('/player', response_description='Get a single player', response_model=PlayerModel,
          status_code=status.HTTP_200_OK)
-async def show_player(identifier: str):
-    return await get_object(identifier, 'players')
+async def show_player(identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'players')
 
 
 @app.get('/roads/{id}', response_description='Get a single road', response_model=RoadModel,
