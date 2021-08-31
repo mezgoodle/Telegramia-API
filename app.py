@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Body, status
+from fastapi import FastAPI, Body, status, HTTPException
 
 from database import create_document, get_all_objects, get_object, update_object, delete_object
 from schemas import *
@@ -93,30 +93,51 @@ async def show_player(identifier: Optional[str] = None, nickname: Optional[str] 
     for key in variables.keys():
         if variables[key] is not None:
             return await get_object({options[key]: variables[key]}, 'players')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.get('/roads/{id}', response_description='Get a single road', response_model=RoadModel,
+@app.get('/road', response_description='Get a single road', response_model=RoadModel,
          status_code=status.HTTP_200_OK)
-async def show_road(identifier: str):
-    return await get_object(identifier, 'roads')
+async def show_road(identifier: Optional[str] = None, name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'roads')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.get('/countries/{id}', response_description='Get a single country', response_model=CountryModel,
+@app.get('/country', response_description='Get a single country', response_model=CountryModel,
          status_code=status.HTTP_200_OK)
-async def show_country(identifier: str):
-    return await get_object(identifier, 'countries')
+async def show_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'countries')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.get('/heroclasses/{id}', response_description='Get a single class', response_model=HeroClassModel,
+@app.get('/heroclass', response_description='Get a single class', response_model=HeroClassModel,
          status_code=status.HTTP_200_OK)
-async def show_class(identifier: str):
-    return await get_object(identifier, 'classes')
+async def show_class(identifier: Optional[str] = None, class_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'class_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'classes')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@app.get('/horses/{id}', response_description='Get a single horse', response_model=HorseModel,
+@app.get('/horse', response_description='Get a single horse', response_model=HorseModel,
          status_code=status.HTTP_200_OK)
-async def show_horse(identifier: str):
-    return await get_object(identifier, 'horses')
+async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'horse_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'horses')
+    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
 @app.put('/players/{id}', response_description='Update a player', response_model=UpdatePlayerModel,
