@@ -6,7 +6,7 @@ attrs==21.2.0
 black==21.7b0
 certifi==2021.5.30
 charset-normalizer==2.0.4
-click==7.1.2
+click==8.0.1
 colorama==0.4.4
 dnspython==2.0.0
 email-validator==1.1.2
