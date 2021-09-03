@@ -1,4 +1,4 @@
-from fastapi import status, HTTPException
+from fastapi import status, HTTPException, Response
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -15,11 +15,16 @@ async def create_document(data: BaseModel, collection: str):
     data = jsonable_encoder(data)
     new_object = await db[collection].insert_one(data)
     created_object = await db[collection].find_one({"_id": new_object.inserted_id})
+    if not created_object:
+        raise HTTPException(status_code=404, detail='Object has not created')
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_object)
 
 
-async def get_all_objects(collection: str):
+async def get_all_objects(collection: str, response: Response):
     objects = await db[collection].find().to_list(1000)
+    if not objects:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {'detail': 'There are no objects'}
     return objects
 
 
