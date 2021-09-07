@@ -20,11 +20,10 @@ async def create_document(data: BaseModel, collection: str):
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_object)
 
 
-async def get_all_objects(collection: str, response: Response):
+async def get_all_objects(collection: str):
     objects = await db[collection].find().to_list(1000)
     if not objects:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return {'detail': 'There are no objects'}
+        raise HTTPException(status_code=404, detail='Objects have not found')
     return objects
 
 

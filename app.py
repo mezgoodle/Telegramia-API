@@ -53,35 +53,35 @@ async def create_horse(horse: HorseModel = Body(...)):
 @app.get('/players', response_description='List all players', response_model=List[PlayerModel],
          status_code=status.HTTP_200_OK)
 async def list_players(response: Response):
-    players = await get_all_objects('players', response)
+    players = await get_all_objects('players')
     return players
 
 
 @app.get('/roads', response_description='List all roads', response_model=List[RoadModel],
          status_code=status.HTTP_200_OK)
 async def list_roads(response: Response):
-    roads = await get_all_objects('roads', response)
+    roads = await get_all_objects('roads')
     return roads
 
 
 @app.get('/countries', response_description='List all countries', response_model=List[CountryModel],
          status_code=status.HTTP_200_OK)
 async def list_countries(response: Response):
-    countries = await get_all_objects('countries', response)
+    countries = await get_all_objects('countries')
     return countries
 
 
 @app.get('/heroclasses', response_description='List all classes', response_model=List[HeroClassModel],
          status_code=status.HTTP_200_OK)
 async def list_classes(response: Response):
-    classes = await get_all_objects('classes', response)
+    classes = await get_all_objects('classes')
     return classes
 
 
 @app.get('/horses', response_description='List all horses', response_model=List[HorseModel],
          status_code=status.HTTP_200_OK)
 async def list_horses(response: Response):
-    horses = await get_all_objects('horses', response)
+    horses = await get_all_objects('horses')
     return horses
 
 
