@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Body, status, HTTPException, Response
+from fastapi import FastAPI, Body, status, HTTPException
 
 from database import create_document, get_all_objects, get_object, update_object, delete_object
 from schemas import *
@@ -52,42 +52,42 @@ async def create_horse(horse: HorseModel = Body(...)):
 
 @app.get('/players', response_description='List all players', response_model=List[PlayerModel],
          status_code=status.HTTP_200_OK)
-async def list_players(response: Response):
+async def list_players():
     players = await get_all_objects('players')
     return players
 
 
 @app.get('/roads', response_description='List all roads', response_model=List[RoadModel],
          status_code=status.HTTP_200_OK)
-async def list_roads(response: Response):
+async def list_roads():
     roads = await get_all_objects('roads')
     return roads
 
 
 @app.get('/countries', response_description='List all countries', response_model=List[CountryModel],
          status_code=status.HTTP_200_OK)
-async def list_countries(response: Response):
+async def list_countries():
     countries = await get_all_objects('countries')
     return countries
 
 
 @app.get('/heroclasses', response_description='List all classes', response_model=List[HeroClassModel],
          status_code=status.HTTP_200_OK)
-async def list_classes(response: Response):
+async def list_classes():
     classes = await get_all_objects('classes')
     return classes
 
 
 @app.get('/horses', response_description='List all horses', response_model=List[HorseModel],
          status_code=status.HTTP_200_OK)
-async def list_horses(response: Response):
+async def list_horses():
     horses = await get_all_objects('horses')
     return horses
 
 
 @app.get('/player', response_description='Get a single player', response_model=PlayerModel,
          status_code=status.HTTP_200_OK)
-async def show_player(response: Response, identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
+async def show_player(identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
     for key in variables.keys():
