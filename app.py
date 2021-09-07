@@ -153,7 +153,7 @@ async def update_player(identifier: Optional[str] = None, nickname: Optional[str
 
 
 @app.delete('/player', response_description='Delete a player',
-            status_code=status.HTTP_200_OK)
+            status_code=status.HTTP_204_NO_CONTENT)
 async def delete_player(identifier: Optional[str] = None,
                         nickname: Optional[str] = None, username: Optional[str] = None):
     variables = locals()
@@ -165,7 +165,7 @@ async def delete_player(identifier: Optional[str] = None,
 
 
 @app.delete('/road', response_description='Delete a road',
-            status_code=status.HTTP_200_OK)
+            status_code=status.HTTP_204_NO_CONTENT)
 async def delete_road(identifier: Optional[str] = None, name: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'name': 'name'}
@@ -176,7 +176,7 @@ async def delete_road(identifier: Optional[str] = None, name: Optional[str] = No
 
 
 @app.delete('/country', response_description='Delete a country',
-            status_code=status.HTTP_200_OK)
+            status_code=status.HTTP_204_NO_CONTENT)
 async def delete_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
@@ -187,7 +187,7 @@ async def delete_country(identifier: Optional[str] = None, name: Optional[str] =
 
 
 @app.delete('/heroclass', response_description='Delete a class',
-            status_code=status.HTTP_200_OK)
+            status_code=status.HTTP_204_NO_CONTENT)
 async def delete_class(identifier: Optional[str] = None, class_name: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'class_name': 'name'}
