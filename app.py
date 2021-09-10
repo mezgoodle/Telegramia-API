@@ -4,6 +4,7 @@ from fastapi import FastAPI, Body, status, HTTPException
 
 from database import create_document, get_all_objects, get_object, update_object, delete_object
 from schemas import *
+from hashing import Hash
 
 app = FastAPI()
 
@@ -54,6 +55,7 @@ async def create_horse(horse: HorseModel = Body(...)):
 @app.post('/admin', response_description='Add new admin', response_model=AdminModel,
           status_code=status.HTTP_201_CREATED)
 async def create_admin(admin: AdminModel = Body(...)):
+    admin.password = Hash.bcrypt(admin.password)
     # print(admin.password)
     return await create_document(admin, 'admins')
 
