@@ -291,3 +291,11 @@ class UpdateCityModel(BaseModel):
 
 class UpdateHorseModel(BaseModel):
     pass
+
+
+class UpdateHeroClassModel(BaseModel):
+    pass
+
+
+class UpdateAdminModel(BaseModel):
+    pass

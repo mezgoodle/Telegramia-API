@@ -95,6 +95,27 @@ async def list_horses():
     return horses
 
 
+@app.get('/items', response_description='List all items', response_model=List[ItemModel],
+         status_code=status.HTTP_200_OK, tags=['Get methods', 'Items'])
+async def list_items():
+    items = await get_all_objects('items')
+    return items
+
+
+@app.get('/cities', response_description='List all cities', response_model=List[CityModel],
+         status_code=status.HTTP_200_OK, tags=['Get methods', 'Cities'])
+async def list_cities():
+    cities = await get_all_objects('cities')
+    return cities
+
+
+@app.get('/admins', response_description='List all admins', response_model=List[ShowAdminModel],
+         status_code=status.HTTP_200_OK, tags=['Get methods', 'Admins'])
+async def list_admins():
+    admins = await get_all_objects('admins')
+    return admins
+
+
 @app.get('/player', response_description='Get a single player', response_model=PlayerModel,
          status_code=status.HTTP_200_OK, tags=['Get methods', 'Players'])
 async def show_player(identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
@@ -150,6 +171,28 @@ async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
+@app.get('/item', response_description='Get a single item', response_model=ItemModel,
+         status_code=status.HTTP_200_OK, tags=['Get methods', 'Items'])
+async def show_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None):
+    variables = locals()
+    options = {'identifier': '_id', 'item_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key], 'city': city_name}, 'items')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.get('/city', response_description='Get a single city', response_model=CityModel,
+         status_code=status.HTTP_200_OK, tags=['Get methods', 'Cities'])
+async def show_city(identifier: Optional[str] = None, city_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'city_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'cities')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
 @app.get('/admin', response_description='Get a single admin', response_model=ShowAdminModel,
          status_code=status.HTTP_200_OK, tags=['Get methods', 'Admins'])
 async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
@@ -170,6 +213,90 @@ async def update_player(identifier: Optional[str] = None, nickname: Optional[str
     for key in variables.keys():
         if variables[key] is not None:
             return await update_object({options[key]: variables[key]}, player, 'players')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/road', response_description='Update a road', response_model=UpdateRoadModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Roads'])
+async def update_road(identifier: Optional[str] = None, name: Optional[str] = None,
+                      road: UpdateRoadModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, road, 'roads')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/country', response_description='Update a country', response_model=UpdateCountryModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Countries'])
+async def update_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None,
+                         country: UpdateCountryModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, country, 'countries')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/item', response_description='Update an item', response_model=UpdateItemModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Items'])
+async def update_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None,
+                      item: UpdateItemModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'item_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key], 'city': city_name}, item, 'items')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/city', response_description='Update a city', response_model=UpdateCityModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Cities'])
+async def update_city(identifier: Optional[str] = None, city_name: Optional[str] = None,
+                      city: UpdateCityModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'city_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, city, 'cities')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/heroclass', response_description='Update a class', response_model=UpdateHeroClassModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Hero classes'])
+async def update_class(identifier: Optional[str] = None, class_name: Optional[str] = None,
+                       hero_class: UpdateHeroClassModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'class_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, hero_class, 'classes')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/horse', response_description='Update a horse', response_model=UpdateHorseModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Horses'])
+async def update_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None,
+                       horse: UpdateHeroClassModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'horse_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, horse, 'horses')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.put('/admin', response_description='Update an admin', response_model=UpdateAdminModel,
+         status_code=status.HTTP_200_OK, tags=['Update methods', 'Admins'])
+async def update_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None,
+                       admin: UpdateAdminModel = Body(...)):
+    variables = locals()
+    options = {'identifier': '_id', 'admin_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, admin, 'admins')
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
@@ -218,9 +345,42 @@ async def delete_class(identifier: Optional[str] = None, class_name: Optional[st
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
+@app.delete('/item', response_description='Delete an item',
+            status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Items'])
+async def delete_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None):
+    variables = locals()
+    options = {'identifier': '_id', 'item_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key], 'city': city_name}, 'items')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.delete('/city', response_description='Delete a city',
+            status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Cities'])
+async def delete_city(identifier: Optional[str] = None, city_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'city_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'cities')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@app.delete('/horse', response_description='Delete a horse',
+            status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Horses'])
+async def delete_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'horse_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'horses')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
 @app.delete('/admin', response_description='Delete an admin',
             status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Admins'])
-async def delete_class(identifier: Optional[str] = None, admin_name: Optional[str] = None):
+async def delete_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'admin_name': 'name'}
     for key in variables.keys():
