@@ -150,6 +150,17 @@ async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
+@app.get('/admin', response_description='Get a single admin', response_model=ShowAdminModel,
+         status_code=status.HTTP_200_OK)
+async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
+    variables = locals()
+    options = {'identifier': '_id', 'admin_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'admins')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
 @app.put('/player', response_description='Update a player', response_model=UpdatePlayerModel,
          status_code=status.HTTP_200_OK)
 async def update_player(identifier: Optional[str] = None, nickname: Optional[str] = None,

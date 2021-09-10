@@ -223,6 +223,22 @@ class AdminModel(BaseModel):
         }
 
 
+class ShowAdminModel(BaseModel):
+    name: str = Field(...)
+    email: str = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'mezgoodle',
+                'email': 'mezgoodle@gmail.com',
+            }
+        }
+
+
 class UpdatePlayerModel(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
