@@ -50,6 +50,14 @@ async def create_horse(horse: HorseModel = Body(...)):
     return await create_document(horse, 'horses')
 
 
+# TODO: add authentication
+@app.post('/admin', response_description='Add new admin', response_model=AdminModel,
+          status_code=status.HTTP_201_CREATED)
+async def create_admin(admin: AdminModel = Body(...)):
+    # print(admin.password)
+    return await create_document(admin, 'admins')
+
+
 @app.get('/players', response_description='List all players', response_model=List[PlayerModel],
          status_code=status.HTTP_200_OK)
 async def list_players():
