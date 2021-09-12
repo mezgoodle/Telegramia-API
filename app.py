@@ -5,14 +5,11 @@ from fastapi import FastAPI, Body, status, HTTPException
 from database import create_document, get_all_objects, get_object, update_object, delete_object
 from schemas import *
 from hashing import Hash
+from routers import player
 
 app = FastAPI()
 
-
-@app.post('/player', response_description='Add new player', response_model=PlayerModel,
-          status_code=status.HTTP_201_CREATED, tags=['Post methods', 'Players'])
-async def create_player(player: PlayerModel = Body(...)):
-    return await create_document(player, 'players')
+app.include_router(player.router)
 
 
 @app.post('/road', response_description='Add new road', response_model=RoadModel,
@@ -56,15 +53,7 @@ async def create_horse(horse: HorseModel = Body(...)):
           status_code=status.HTTP_201_CREATED, tags=['Post methods', 'Admins'])
 async def create_admin(admin: AdminModel = Body(...)):
     admin.password = Hash.bcrypt(admin.password)
-    # print(admin.password)
     return await create_document(admin, 'admins')
-
-
-@app.get('/players', response_description='List all players', response_model=List[PlayerModel],
-         status_code=status.HTTP_200_OK, tags=['Get methods', 'Players'])
-async def list_players():
-    players = await get_all_objects('players')
-    return players
 
 
 @app.get('/roads', response_description='List all roads', response_model=List[RoadModel],
@@ -114,17 +103,6 @@ async def list_cities():
 async def list_admins():
     admins = await get_all_objects('admins')
     return admins
-
-
-@app.get('/player', response_description='Get a single player', response_model=PlayerModel,
-         status_code=status.HTTP_200_OK, tags=['Get methods', 'Players'])
-async def show_player(identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
-    variables = locals()
-    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
-    for key in variables.keys():
-        if variables[key] is not None:
-            return await get_object({options[key]: variables[key]}, 'players')
-    raise HTTPException(status_code=404, detail='Set some parameters')
 
 
 @app.get('/road', response_description='Get a single road', response_model=RoadModel,
@@ -201,18 +179,6 @@ async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str]
     for key in variables.keys():
         if variables[key] is not None:
             return await get_object({options[key]: variables[key]}, 'admins')
-    raise HTTPException(status_code=404, detail='Set some parameters')
-
-
-@app.put('/player', response_description='Update a player', response_model=UpdatePlayerModel,
-         status_code=status.HTTP_200_OK, tags=['Update methods', 'Players'])
-async def update_player(identifier: Optional[str] = None, nickname: Optional[str] = None,
-                        username: Optional[str] = None, player: UpdatePlayerModel = Body(...)):
-    variables = locals()
-    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
-    for key in variables.keys():
-        if variables[key] is not None:
-            return await update_object({options[key]: variables[key]}, player, 'players')
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
@@ -297,18 +263,6 @@ async def update_admin(identifier: Optional[str] = None, admin_name: Optional[st
     for key in variables.keys():
         if variables[key] is not None:
             return await update_object({options[key]: variables[key]}, admin, 'admins')
-    raise HTTPException(status_code=404, detail='Set some parameters')
-
-
-@app.delete('/player', response_description='Delete a player',
-            status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Players'])
-async def delete_player(identifier: Optional[str] = None,
-                        nickname: Optional[str] = None, username: Optional[str] = None):
-    variables = locals()
-    options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
-    for key in variables.keys():
-        if variables[key] is not None:
-            return await delete_object({options[key]: variables[key]}, 'players')
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
