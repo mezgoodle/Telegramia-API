@@ -3,24 +3,26 @@ from database import get_object, create_document, get_all_objects, update_object
 from schemas import CountryModel, UpdateCountryModel
 from typing import Optional, List
 
-router = APIRouter()
+router = APIRouter(
+    tags=['Countries']
+)
 
 
 @router.post('/country', response_description='Add new country', response_model=CountryModel,
-             status_code=status.HTTP_201_CREATED, tags=['Post methods', 'Countries'])
+             status_code=status.HTTP_201_CREATED)
 async def create_country(country: CountryModel = Body(...)):
     return await create_document(country, 'countries')
 
 
 @router.get('/countries', response_description='List all countries', response_model=List[CountryModel],
-            status_code=status.HTTP_200_OK, tags=['Get methods', 'Countries'])
+            status_code=status.HTTP_200_OK)
 async def list_countries():
     countries = await get_all_objects('countries')
     return countries
 
 
 @router.get('/country', response_description='Get a single country', response_model=CountryModel,
-            status_code=status.HTTP_200_OK, tags=['Get methods', 'Countries'])
+            status_code=status.HTTP_200_OK)
 async def show_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
@@ -31,7 +33,7 @@ async def show_country(identifier: Optional[str] = None, name: Optional[str] = N
 
 
 @router.put('/country', response_description='Update a country', response_model=UpdateCountryModel,
-            status_code=status.HTTP_200_OK, tags=['Update methods', 'Countries'])
+            status_code=status.HTTP_200_OK)
 async def update_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None,
                          country: UpdateCountryModel = Body(...)):
     variables = locals()
@@ -43,7 +45,7 @@ async def update_country(identifier: Optional[str] = None, name: Optional[str] =
 
 
 @router.delete('/country', response_description='Delete a country',
-               status_code=status.HTTP_204_NO_CONTENT, tags=['Delete methods', 'Countries'])
+               status_code=status.HTTP_204_NO_CONTENT)
 async def delete_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
     variables = locals()
     options = {'identifier': '_id', 'name': 'name', 'capital': 'capital'}
