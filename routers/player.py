@@ -4,24 +4,25 @@ from schemas import PlayerModel, UpdatePlayerModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/player',
     tags=['Players']
 )
 
 
-@router.post('/player', response_description='Add new player', response_model=PlayerModel,
+@router.post('', response_description='Add new player', response_model=PlayerModel,
              status_code=status.HTTP_201_CREATED)
 async def create_player(player: PlayerModel = Body(...)):
     return await create_document(player, 'players')
 
 
-@router.get('/players', response_description='List all players', response_model=List[PlayerModel],
+@router.get('s', response_description='List all players', response_model=List[PlayerModel],
             status_code=status.HTTP_200_OK)
 async def list_players():
     players = await get_all_objects('players')
     return players
 
 
-@router.get('/player', response_description='Get a single player', response_model=PlayerModel,
+@router.get('', response_description='Get a single player', response_model=PlayerModel,
             status_code=status.HTTP_200_OK)
 async def show_player(identifier: Optional[str] = None, nickname: Optional[str] = None, username: Optional[str] = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_player(identifier: Optional[str] = None, nickname: Optional[str] 
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/player', response_description='Update a player', response_model=UpdatePlayerModel,
+@router.put('', response_description='Update a player', response_model=UpdatePlayerModel,
             status_code=status.HTTP_200_OK)
 async def update_player(identifier: Optional[str] = None, nickname: Optional[str] = None,
                         username: Optional[str] = None, player: UpdatePlayerModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_player(identifier: Optional[str] = None, nickname: Optional[str
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/player', response_description='Delete a player',
+@router.delete('', response_description='Delete a player',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_player(identifier: Optional[str] = None,
                         nickname: Optional[str] = None, username: Optional[str] = None):

@@ -4,24 +4,25 @@ from schemas import ItemModel, UpdateItemModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/item',
     tags=['Items']
 )
 
 
-@router.post('/item', response_description='Add new item', response_model=ItemModel,
+@router.post('', response_description='Add new item', response_model=ItemModel,
              status_code=status.HTTP_201_CREATED)
 async def create_item(item: ItemModel = Body(...)):
     return await create_document(item, 'items')
 
 
-@router.get('/items', response_description='List all items', response_model=List[ItemModel],
+@router.get('s', response_description='List all items', response_model=List[ItemModel],
             status_code=status.HTTP_200_OK)
 async def list_items():
     items = await get_all_objects('items')
     return items
 
 
-@router.get('/item', response_description='Get a single item', response_model=ItemModel,
+@router.get('', response_description='Get a single item', response_model=ItemModel,
             status_code=status.HTTP_200_OK)
 async def show_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_item(identifier: Optional[str] = None, item_name: Optional[str] =
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/item', response_description='Update an item', response_model=UpdateItemModel,
+@router.put('', response_description='Update an item', response_model=UpdateItemModel,
             status_code=status.HTTP_200_OK)
 async def update_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None,
                       item: UpdateItemModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_item(identifier: Optional[str] = None, item_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/item', response_description='Delete an item',
+@router.delete('', response_description='Delete an item',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None):
     variables = locals()

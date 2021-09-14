@@ -4,24 +4,25 @@ from schemas import CityModel, UpdateCityModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/cit',
     tags=['Cities']
 )
 
 
-@router.post('/city', response_description='Add new city', response_model=CityModel,
+@router.post('y', response_description='Add new city', response_model=CityModel,
              status_code=status.HTTP_201_CREATED)
 async def create_city(city: CityModel = Body(...)):
     return await create_document(city, 'cities')
 
 
-@router.get('/cities', response_description='List all cities', response_model=List[CityModel],
+@router.get('ies', response_description='List all cities', response_model=List[CityModel],
             status_code=status.HTTP_200_OK)
 async def list_cities():
     cities = await get_all_objects('cities')
     return cities
 
 
-@router.get('/city', response_description='Get a single city', response_model=CityModel,
+@router.get('y', response_description='Get a single city', response_model=CityModel,
             status_code=status.HTTP_200_OK)
 async def show_city(identifier: Optional[str] = None, city_name: Optional[str] = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_city(identifier: Optional[str] = None, city_name: Optional[str] =
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/city', response_description='Update a city', response_model=UpdateCityModel,
+@router.put('y', response_description='Update a city', response_model=UpdateCityModel,
             status_code=status.HTTP_200_OK)
 async def update_city(identifier: Optional[str] = None, city_name: Optional[str] = None,
                       city: UpdateCityModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_city(identifier: Optional[str] = None, city_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/city', response_description='Delete a city',
+@router.delete('y', response_description='Delete a city',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_city(identifier: Optional[str] = None, city_name: Optional[str] = None):
     variables = locals()

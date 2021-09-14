@@ -4,24 +4,25 @@ from schemas import HeroClassModel, UpdateHeroClassModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/heroclass',
     tags=['Hero classes']
 )
 
 
-@router.post('/heroclass', response_description='Add new class', response_model=HeroClassModel,
+@router.post('', response_description='Add new class', response_model=HeroClassModel,
              status_code=status.HTTP_201_CREATED)
 async def create_class(hero_class: HeroClassModel = Body(...)):
     return await create_document(hero_class, 'classes')
 
 
-@router.get('/heroclasses', response_description='List all classes', response_model=List[HeroClassModel],
+@router.get('es', response_description='List all classes', response_model=List[HeroClassModel],
             status_code=status.HTTP_200_OK)
 async def list_classes():
     classes = await get_all_objects('classes')
     return classes
 
 
-@router.get('/heroclass', response_description='Get a single class', response_model=HeroClassModel,
+@router.get('', response_description='Get a single class', response_model=HeroClassModel,
             status_code=status.HTTP_200_OK)
 async def show_class(identifier: Optional[str] = None, class_name: Optional[str] = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_class(identifier: Optional[str] = None, class_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/heroclass', response_description='Update a class', response_model=UpdateHeroClassModel,
+@router.put('', response_description='Update a class', response_model=UpdateHeroClassModel,
             status_code=status.HTTP_200_OK)
 async def update_class(identifier: Optional[str] = None, class_name: Optional[str] = None,
                        hero_class: UpdateHeroClassModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_class(identifier: Optional[str] = None, class_name: Optional[st
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/heroclass', response_description='Delete a class',
+@router.delete('', response_description='Delete a class',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_class(identifier: Optional[str] = None, class_name: Optional[str] = None):
     variables = locals()

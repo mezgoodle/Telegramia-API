@@ -4,24 +4,25 @@ from schemas import HorseModel, UpdateHorseModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/horse',
     tags=['Horses']
 )
 
 
-@router.post('/horse', response_description='Add new horse', response_model=HorseModel,
+@router.post('', response_description='Add new horse', response_model=HorseModel,
              status_code=status.HTTP_201_CREATED)
 async def create_horse(horse: HorseModel = Body(...)):
     return await create_document(horse, 'horses')
 
 
-@router.get('/horses', response_description='List all horses', response_model=List[HorseModel],
+@router.get('s', response_description='List all horses', response_model=List[HorseModel],
             status_code=status.HTTP_200_OK)
 async def list_horses():
     horses = await get_all_objects('horses')
     return horses
 
 
-@router.get('/horse', response_description='Get a single horse', response_model=HorseModel,
+@router.get('', response_description='Get a single horse', response_model=HorseModel,
             status_code=status.HTTP_200_OK)
 async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_horse(identifier: Optional[str] = None, horse_name: Optional[str]
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/horse', response_description='Update a horse', response_model=UpdateHorseModel,
+@router.put('', response_description='Update a horse', response_model=UpdateHorseModel,
             status_code=status.HTTP_200_OK)
 async def update_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None,
                        horse: UpdateHorseModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_horse(identifier: Optional[str] = None, horse_name: Optional[st
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/horse', response_description='Delete a horse',
+@router.delete('', response_description='Delete a horse',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_horse(identifier: Optional[str] = None, horse_name: Optional[str] = None):
     variables = locals()

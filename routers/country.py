@@ -4,24 +4,25 @@ from schemas import CountryModel, UpdateCountryModel
 from typing import Optional, List
 
 router = APIRouter(
+    prefix='/countr',
     tags=['Countries']
 )
 
 
-@router.post('/country', response_description='Add new country', response_model=CountryModel,
+@router.post('y', response_description='Add new country', response_model=CountryModel,
              status_code=status.HTTP_201_CREATED)
 async def create_country(country: CountryModel = Body(...)):
     return await create_document(country, 'countries')
 
 
-@router.get('/countries', response_description='List all countries', response_model=List[CountryModel],
+@router.get('ies', response_description='List all countries', response_model=List[CountryModel],
             status_code=status.HTTP_200_OK)
 async def list_countries():
     countries = await get_all_objects('countries')
     return countries
 
 
-@router.get('/country', response_description='Get a single country', response_model=CountryModel,
+@router.get('y', response_description='Get a single country', response_model=CountryModel,
             status_code=status.HTTP_200_OK)
 async def show_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
     variables = locals()
@@ -32,7 +33,7 @@ async def show_country(identifier: Optional[str] = None, name: Optional[str] = N
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.put('/country', response_description='Update a country', response_model=UpdateCountryModel,
+@router.put('y', response_description='Update a country', response_model=UpdateCountryModel,
             status_code=status.HTTP_200_OK)
 async def update_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None,
                          country: UpdateCountryModel = Body(...)):
@@ -44,7 +45,7 @@ async def update_country(identifier: Optional[str] = None, name: Optional[str] =
     raise HTTPException(status_code=404, detail='Set some parameters')
 
 
-@router.delete('/country', response_description='Delete a country',
+@router.delete('y', response_description='Delete a country',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_country(identifier: Optional[str] = None, name: Optional[str] = None, capital: Optional[str] = None):
     variables = locals()
