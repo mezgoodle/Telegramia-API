@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 from routers import player, road, country, item, city, heroclass, horse, admin, authentication
 
@@ -13,3 +13,8 @@ app.include_router(city.router)
 app.include_router(heroclass.router)
 app.include_router(horse.router)
 app.include_router(admin.router)
+
+
+@app.get('', status_code=status.HTTP_200_OK)
+async def start_page():
+    return {'Information': 'Too see all available methods visit /docs page'}
