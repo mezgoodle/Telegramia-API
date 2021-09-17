@@ -239,21 +239,6 @@ class ShowAdminModel(BaseModel):
         }
 
 
-class Login(BaseModel):
-    username: str = Field(...)
-    password: str = Field(...)
-
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        schema_extra = {
-            "example": {
-                'username': 'mezgoodle',
-                'password': '123456',
-            }
-        }
-
-
 class Token(BaseModel):
     access_token: str
     token_type: str

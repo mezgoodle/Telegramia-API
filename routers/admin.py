@@ -11,17 +11,16 @@ router = APIRouter(
 )
 
 
-# TODO: add authentication
 @router.post('', response_description='Add new admin', response_model=AdminModel,
              status_code=status.HTTP_201_CREATED)
-async def create_admin(admin: AdminModel = Body(...)):
+async def create_admin(admin: AdminModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     admin.password = Hash.bcrypt(admin.password)
     return await create_document(admin, 'admins')
 
 
 @router.get('s', response_description='List all admins', response_model=List[ShowAdminModel],
             status_code=status.HTTP_200_OK)
-async def list_admins(current_user: AdminModel = Depends(get_current_user)):
+async def list_admins():
     admins = await get_all_objects('admins')
     return admins
 
@@ -40,7 +39,7 @@ async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str]
 @router.put('', response_description='Update an admin', response_model=UpdateAdminModel,
             status_code=status.HTTP_200_OK)
 async def update_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None,
-                       admin: UpdateAdminModel = Body(...)):
+                       admin: UpdateAdminModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'admin_name': 'name'}
     for key in variables.keys():
@@ -51,7 +50,8 @@ async def update_admin(identifier: Optional[str] = None, admin_name: Optional[st
 
 @router.delete('', response_description='Delete an admin',
                status_code=status.HTTP_204_NO_CONTENT)
-async def delete_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
+async def delete_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None,
+                       current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'admin_name': 'name'}
     for key in variables.keys():
