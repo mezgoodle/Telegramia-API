@@ -4,11 +4,10 @@ import os
 from datetime import datetime, timedelta
 
 from schemas import TokenData
+from config import SECRET_KEY, ALGORITHM
 
 # to get a string like this run:
 # openssl rand -hex 32
-SECRET_KEY = os.getenv('SECRET_KEY', 'key')
-ALGORITHM = os.getenv('ALGORITHM', 'method')
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
