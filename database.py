@@ -1,4 +1,4 @@
-from fastapi import status, HTTPException, Response
+from fastapi import status, HTTPException
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel

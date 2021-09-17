@@ -27,5 +27,6 @@ def verify_token(token: str, credentials_exception):
         if email is None:
             raise credentials_exception
         token_data = TokenData(email=email)
+        print(token_data)
     except JWTError:
         raise credentials_exception
