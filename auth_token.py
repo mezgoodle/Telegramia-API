@@ -1,4 +1,5 @@
 from jose import jwt, JWTError
+from fastapi import HTTPException
 
 import os
 from datetime import datetime, timedelta
@@ -19,7 +20,7 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 
-def verify_token(token: str, credentials_exception):
+def verify_token(token: str, credentials_exception: HTTPException) -> None:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get('sub')

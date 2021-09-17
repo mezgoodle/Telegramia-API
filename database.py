@@ -28,16 +28,16 @@ async def get_all_objects(collection: str):
 
 
 async def get_object(query: dict, collection: str):
-    if (object := await db[collection].find_one(query)) is not None:
-        return object
+    if (founded_object := await db[collection].find_one(query)) is not None:
+        return founded_object
     raise HTTPException(status_code=404, detail='Object has not found')
 
 
-async def update_object(query: dict, object: BaseModel, collection: str):
-    object = {k: v for k, v in object.dict().items() if v is not None}
+async def update_object(query: dict, requested_object: BaseModel, collection: str):
+    requested_object = {k: v for k, v in requested_object.dict().items() if v is not None}
 
-    if len(object) >= 1:
-        update_result = await db[collection].update_one(query, {"$set": object})
+    if len(requested_object) >= 1:
+        update_result = await db[collection].update_one(query, {"$set": requested_object})
 
         if update_result.modified_count == 1:
             if (updated_object := await db[collection].find_one(query)) is not None:
