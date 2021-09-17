@@ -1,8 +1,15 @@
-from datetime import datetime, timedelta
 from jose import jwt, JWTError
+
+import os
+from datetime import datetime, timedelta
 
 from schemas import TokenData
 
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = os.getenv('SECRET_KEY', 'key')
+ALGORITHM = os.getenv('ALGORITHM', 'method')
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def create_access_token(data: dict):
