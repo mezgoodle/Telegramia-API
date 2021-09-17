@@ -15,6 +15,6 @@ app.include_router(horse.router)
 app.include_router(admin.router)
 
 
-@app.get('', status_code=status.HTTP_200_OK)
+@app.get('/', status_code=status.HTTP_200_OK)
 async def start_page():
     return {'Information': 'Too see all available methods visit /docs page'}
