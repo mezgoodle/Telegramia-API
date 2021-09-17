@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status, HTTPException, Body
+from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
-from schemas import PlayerModel, UpdatePlayerModel
+from schemas import PlayerModel, UpdatePlayerModel, AdminModel
+from oauth2 import get_current_user
 from typing import Optional, List
 
 router = APIRouter(
@@ -11,7 +12,7 @@ router = APIRouter(
 
 @router.post('', response_description='Add new player', response_model=PlayerModel,
              status_code=status.HTTP_201_CREATED)
-async def create_player(player: PlayerModel = Body(...)):
+async def create_player(player: PlayerModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     return await create_document(player, 'players')
 
 
@@ -36,7 +37,8 @@ async def show_player(identifier: Optional[str] = None, nickname: Optional[str] 
 @router.put('', response_description='Update a player', response_model=UpdatePlayerModel,
             status_code=status.HTTP_200_OK)
 async def update_player(identifier: Optional[str] = None, nickname: Optional[str] = None,
-                        username: Optional[str] = None, player: UpdatePlayerModel = Body(...)):
+                        username: Optional[str] = None, player: UpdatePlayerModel = Body(...),
+                        current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
     for key in variables.keys():
@@ -48,7 +50,8 @@ async def update_player(identifier: Optional[str] = None, nickname: Optional[str
 @router.delete('', response_description='Delete a player',
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_player(identifier: Optional[str] = None,
-                        nickname: Optional[str] = None, username: Optional[str] = None):
+                        nickname: Optional[str] = None, username: Optional[str] = None,
+                        current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'nickname': 'name', 'username': 'telegram_name'}
     for key in variables.keys():

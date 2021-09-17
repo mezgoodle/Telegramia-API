@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status, HTTPException, Body
+from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
-from schemas import CityModel, UpdateCityModel
+from oauth2 import get_current_user
+from schemas import CityModel, UpdateCityModel, AdminModel
 from typing import Optional, List
 
 router = APIRouter(
@@ -11,7 +12,7 @@ router = APIRouter(
 
 @router.post('y', response_description='Add new city', response_model=CityModel,
              status_code=status.HTTP_201_CREATED)
-async def create_city(city: CityModel = Body(...)):
+async def create_city(city: CityModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     return await create_document(city, 'cities')
 
 
@@ -36,7 +37,7 @@ async def show_city(identifier: Optional[str] = None, city_name: Optional[str] =
 @router.put('y', response_description='Update a city', response_model=UpdateCityModel,
             status_code=status.HTTP_200_OK)
 async def update_city(identifier: Optional[str] = None, city_name: Optional[str] = None,
-                      city: UpdateCityModel = Body(...)):
+                      city: UpdateCityModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'city_name': 'name'}
     for key in variables.keys():
@@ -47,7 +48,8 @@ async def update_city(identifier: Optional[str] = None, city_name: Optional[str]
 
 @router.delete('y', response_description='Delete a city',
                status_code=status.HTTP_204_NO_CONTENT)
-async def delete_city(identifier: Optional[str] = None, city_name: Optional[str] = None):
+async def delete_city(identifier: Optional[str] = None, city_name: Optional[str] = None,
+                      current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'city_name': 'name'}
     for key in variables.keys():

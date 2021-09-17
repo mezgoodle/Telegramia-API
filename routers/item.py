@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status, HTTPException, Body
+from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
-from schemas import ItemModel, UpdateItemModel
+from schemas import ItemModel, UpdateItemModel, AdminModel
+from oauth2 import get_current_user
 from typing import Optional, List
 
 router = APIRouter(
@@ -11,7 +12,7 @@ router = APIRouter(
 
 @router.post('', response_description='Add new item', response_model=ItemModel,
              status_code=status.HTTP_201_CREATED)
-async def create_item(item: ItemModel = Body(...)):
+async def create_item(item: ItemModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     return await create_document(item, 'items')
 
 
@@ -36,7 +37,7 @@ async def show_item(identifier: Optional[str] = None, item_name: Optional[str] =
 @router.put('', response_description='Update an item', response_model=UpdateItemModel,
             status_code=status.HTTP_200_OK)
 async def update_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None,
-                      item: UpdateItemModel = Body(...)):
+                      item: UpdateItemModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'item_name': 'name'}
     for key in variables.keys():
@@ -47,7 +48,8 @@ async def update_item(identifier: Optional[str] = None, item_name: Optional[str]
 
 @router.delete('', response_description='Delete an item',
                status_code=status.HTTP_204_NO_CONTENT)
-async def delete_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None):
+async def delete_item(identifier: Optional[str] = None, item_name: Optional[str] = None, city_name: str = None,
+                      current_user: AdminModel = Depends(get_current_user)):
     variables = locals()
     options = {'identifier': '_id', 'item_name': 'name'}
     for key in variables.keys():
