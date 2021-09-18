@@ -20,4 +20,4 @@ flake8:
 test:
   stage: Test
   script:
-  - python -m unittest -v
+  - pytest
