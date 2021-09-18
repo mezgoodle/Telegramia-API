@@ -35,3 +35,9 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+      env:
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        ALGORITHM: ${{ secrets.ALGORITHM }}
+        ADMIN_NICKNAME: ${{ secrets.ADMIN_NICKNAME }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
