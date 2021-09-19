@@ -13,12 +13,24 @@ router = APIRouter(
 @router.post('', response_description='Add new road', response_model=RoadModel,
              status_code=status.HTTP_201_CREATED)
 async def create_road(road: RoadModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
+    """
+    Create a road:
+
+    - **current user** should be admin
+    - **name**: name of the road
+    - **from_obj**: name of the place, where the road starts
+    - **to_obj**: name of the place, where the road ends
+    - **energy**: value of energy that player needs to pass the road
+    """
     return await create_document(road, 'roads')
 
 
 @router.get('s', response_description='List all roads', response_model=List[RoadModel],
             status_code=status.HTTP_200_OK)
 async def list_roads():
+    """
+    Get all roads
+    """
     roads = await get_all_objects('roads')
     return roads
 
@@ -26,6 +38,11 @@ async def list_roads():
 @router.get('', response_description='Get a single road', response_model=RoadModel,
             status_code=status.HTTP_200_OK)
 async def show_road(identifier: Optional[str] = None, name: Optional[str] = None):
+    """
+    Get a road by name:
+
+    - **name**: name of the road
+    """
     variables = locals()
     options = {'identifier': '_id', 'name': 'name'}
     for key in variables.keys():
@@ -38,6 +55,12 @@ async def show_road(identifier: Optional[str] = None, name: Optional[str] = None
             status_code=status.HTTP_200_OK)
 async def update_road(identifier: Optional[str] = None, name: Optional[str] = None,
                       road: UpdateRoadModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
+    """
+    Update a road by name:
+
+    - **current user** should be admin
+    - **name**: name of the road
+    """
     variables = locals()
     options = {'identifier': '_id', 'name': 'name'}
     for key in variables.keys():
@@ -50,6 +73,12 @@ async def update_road(identifier: Optional[str] = None, name: Optional[str] = No
                status_code=status.HTTP_204_NO_CONTENT)
 async def delete_road(identifier: Optional[str] = None, name: Optional[str] = None,
                       current_user: AdminModel = Depends(get_current_user)):
+    """
+    Delete a road by name:
+
+    - **current user** should be admin
+    - **name**: name of the road
+    """
     variables = locals()
     options = {'identifier': '_id', 'name': 'name'}
     for key in variables.keys():
