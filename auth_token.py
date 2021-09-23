@@ -6,12 +6,10 @@ from datetime import datetime, timedelta
 from schemas import TokenData
 from config import SECRET_KEY, ALGORITHM
 
-# to get a string like this run:
-# openssl rand -hex 32
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-def create_access_token(data: dict):
+def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({'exp': expire})
