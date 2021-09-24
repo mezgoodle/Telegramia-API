@@ -282,24 +282,123 @@ class UpdateRoadModel(BaseModel):
 
 
 class UpdateCountryModel(BaseModel):
-    pass
+    name: Optional[str]
+    description: Optional[str]
+    capital: Optional[str]
+    population: Optional[int]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Priaria",
+                "description": "Big country",
+                "capital": "Stormwind",
+                "population": 0,
+            }
+        }
 
 
 class UpdateItemModel(BaseModel):
-    pass
+    name: Optional[str]
+    characteristic: Optional[str]
+    bonus: Optional[float]
+    city: Optional[str]
+    price: Optional[float]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Wood helmet",
+                "characteristic": "strength",
+                "bonus": 13.3,
+                "city": "Stormwind",
+                "price": 34.0,
+            }
+        }
 
 
 class UpdateCityModel(BaseModel):
-    pass
+    name: Optional[str]
+    country: Optional[str]
+    is_capital: Optional[bool]
+    market: Optional[bool]
+    academy: Optional[bool]
+    temple: Optional[bool]
+    tavern: Optional[bool]
+    menagerie: Optional[bool]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Stormwind",
+                'country': 'Alliance',
+                "is_capital": True,
+                'market': True,
+                'academy': False,
+                'temple': False,
+                'tavern': True,
+                'menagerie': True
+            }
+        }
 
 
 class UpdateHorseModel(BaseModel):
-    pass
+    name: Optional[str]
+    bonus: Optional[float]
+    city: Optional[str]
+    price: Optional[float]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "White faster",
+                "bonus": 13.3,
+                "city": "Stormwind",
+                "price": 34.0,
+            }
+        }
 
 
 class UpdateHeroClassModel(BaseModel):
-    pass
+    name: Optional[str]
+    characteristics: Optional[dict]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": 'Воїн',
+                "characteristics": {
+                    'strength': 0.0,
+                    'agility': 0.0,
+                    'intuition': 0.0,
+                    'intelligence': 0.0
+                }
+            }
+        }
 
 
 class UpdateAdminModel(BaseModel):
-    pass
+    name: Optional[dict]
+    email: Optional[dict]
+    password: Optional[dict]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'mezgoodle',
+                'email': 'mezgoodle@gmail.com',
+                'password': '123456'
+            }
+        }
