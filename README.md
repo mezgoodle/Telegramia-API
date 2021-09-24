@@ -1,105 +1,187 @@
 <h1 id="project-title" align="center">
-  Project title <img alt="logo" width="40" height="40" src="https://raw.githubusercontent.com/mezgoodle/images/master/MezidiaLogoTransparent.png" /><br>
+  Telegramia-API <img alt="logo" width="40" height="40" src="https://raw.githubusercontent.com/mezgoodle/images/master/MezidiaLogoTransparent.png" /><br>
   <img alt="language" src="https://img.shields.io/badge/language-python-brightgreen?style=flat-square" />
-  <img alt="language" src="https://img.shields.io/github/issues/mezgoodle/Templates?style=flat-square" />
-  <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/mezgoodle/Templates?style=flat-square" />
-  <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/mezgoodle/Templates?style=flat-square" />
-  <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed/mezgoodle/Templates?style=flat-square" />
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mezgoodle/Templates?style=flat-square">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/mezgoodle/Telegramia-API?style=flat-square" />
+  <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/mezgoodle/Telegramia-API?style=flat-square" />
+  <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/mezgoodle/Telegramia-API?style=flat-square" />
+  <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed/mezgoodle/Telegramia-API?style=flat-square" />
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mezgoodle/Telegramia-API?style=flat-square">
 </h1>
 
 <p align="center">
- A little info about your project and/ or overview that explains <strong>what</strong> the project is about.
- <blockquote>🌟Hello everyone! This is the repository of my package on Python "sync-folders".🌟</blockquote>
+🌟Hello everyone! This is the repository of Telegramia-API.🌟
 </p>
-
-## The README Checklist
-
-A helpful checklist to gauge how your README is coming along:
-
-- [ ] One-liner explaining the purpose of the module
-- [ ] Necessary background context & links
-- [ ] Potentially unfamiliar terms link to informative sources
-- [ ] Clear, *runnable* example of usage
-- [ ] Installation instructions
-- [ ] Extensive API documentation
-- [ ] Performs [cognitive funneling](https://github.com/noffle/art-of-readme#cognitive-funneling)
-- [ ] Caveats and limitations mentioned up-front
-- [ ] Doesn't rely on images to relay critical information
-- [ ] License
 
 ## Motivation :exclamation:
 
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+[Telegramia](https://github.com/mezidia/Telegramia-API) is the game in _Telegram_ and with this API you can take information from the game
 
 ## Build status :hammer:
 
-Build status of continus integration i.e. travis, appveyor etc.
+Here you can see build status of [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration):
 
-> Here you can see build status of [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration)/[continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment):
-
-[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=master)](https://travis-ci.org/akashnimare/foco)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/akashnimare/foco?branch=master&svg=true)](https://ci.appveyor.com/project/akashnimare/foco/branch/master)
-
-## Badges :mega:
-
-Other badges
-
-[![Build Status](https://img.shields.io/badge/Theme-Template-brightgreen?style=flat-square)](https://www.google.com.ua/)
+[![Python application](https://github.com/mezgoodle/Telegramia-API/actions/workflows/python-package.yml/badge.svg)](https://github.com/mezgoodle/Telegramia-API/actions/workflows/python-package.yml)
+[![Python application](https://gitlab.com/mezgoodle/Telegramia-API/badges/master/pipeline.svg)](https://gitlab.com/mezgoodle/Telegramia-API/-/pipelines)
  
 ## Screenshots :camera:
 
-Include logo/demo screenshot etc.
+- `/docs` page
+
+![/docs page](https://raw.githubusercontent.com/mezgoodle/images/master/telegramia_api.png)
 
 ## Tech/framework used :wrench:
 
 **Built with**
 
-- [Electron](https://electron.atom.io)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [bcrypt](https://pypi.org/project/bcrypt/)
+- [passlib](https://pypi.org/project/passlib/)
+- [pymongo](https://pymongo.readthedocs.io/en/stable/)
+- [motor](https://motor.readthedocs.io/en/stable/)
 
 ## Features :muscle:
 
-What makes your project stand out?
-
-> With my package you can **sync** two folders, **manage** logs files, **delete** empty folders and old files, read and create **zip-archives**.
+On the site you can **create**, **update**, **read** and **delete** different information about Telegramia game.
 
 ## Code Example :pushpin:
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+- Router example:
+
+```python
+from fastapi import APIRouter, status, HTTPException, Body, Depends
+from database import get_object, create_document, get_all_objects, update_object, delete_object
+from schemas import AdminModel, UpdateAdminModel, ShowAdminModel
+from typing import Optional, List
+from hashing import Hash
+from oauth2 import get_current_user
+
+router = APIRouter(
+    prefix='/admin',
+    tags=['Admins']
+)
+
+
+@router.post('', response_description='Add new admin', response_model=AdminModel,
+             status_code=status.HTTP_201_CREATED)
+async def create_admin(admin: AdminModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
+    """
+    Create an API admin with all permissions:
+
+    - **current user** should be admin
+    - **name**: admin name
+    - **email**: admin email
+    - **password**: admin password
+    """
+    admin.password = Hash.bcrypt(admin.password)
+    return await create_document(admin, 'admins')
+
+
+@router.get('s', response_description='List all admins', response_model=List[ShowAdminModel],
+            status_code=status.HTTP_200_OK)
+async def list_admins():
+    """
+    Get all admins
+    """
+    admins = await get_all_objects('admins')
+    return admins
+
+
+@router.get('', response_description='Get a single admin', response_model=ShowAdminModel,
+            status_code=status.HTTP_200_OK)
+async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
+    """
+    Get admin by name:
+
+    - **name**: admin name
+    """
+    variables = locals()
+    options = {'identifier': '_id', 'admin_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await get_object({options[key]: variables[key]}, 'admins')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@router.put('', response_description='Update an admin', response_model=UpdateAdminModel,
+            status_code=status.HTTP_200_OK)
+async def update_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None,
+                       admin: UpdateAdminModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
+    """
+    Update an API admin:
+
+    - **current user** should be admin
+    - **name**: admin name
+    - **email**: admin email
+    - **password**: admin password
+    """
+    variables = locals()
+    options = {'identifier': '_id', 'admin_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await update_object({options[key]: variables[key]}, admin, 'admins')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+
+@router.delete('', response_description='Delete an admin',
+               status_code=status.HTTP_204_NO_CONTENT)
+async def delete_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None,
+                       current_user: AdminModel = Depends(get_current_user)):
+    """
+    Delete an API admin:
+
+    - **current user** should be admin
+    - **name**: admin name
+    """
+    variables = locals()
+    options = {'identifier': '_id', 'admin_name': 'name'}
+    for key in variables.keys():
+        if variables[key] is not None:
+            return await delete_object({options[key]: variables[key]}, 'admins')
+    raise HTTPException(status_code=404, detail='Set some parameters')
+
+```
 
 ## Installation :computer:
 
-Provide step by step series of examples and explanations about how to get a development env running.
+1. Clone this repository:
+
+```bash
+git clone https://github.com/mezgoodle/Telegramia-API.git
+```
+
+2. Install all packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Set environment variables in `config.py`
+
+4. Run tests:
+```bash
+pytest 
+```
 
 ## Fast usage :dash:
 
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+Just run the server with _uvicorn_:
 
-## API Reference :fireworks:
-
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
-> As tables
-
-## Tests :microscope:
-
-Describe and show how to run the tests with code examples.
-
-> As screenshot or :smile:I give you the [link](https://github.com/mezgoodle/sync-folders/actions?query=workflow%3A%22Python+package%22) to [GitHub Actions](https://github.com/features/actions), where you can see all my tests.
+```bash
+uvicorn app:app --reload
+```
 
 ## Contribute :running:
 
-Let people know how they can contribute into your project. A contributing guideline will be a big plus.
-
-> Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Also look at the [CONTRIBUTING.md](link).
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Also look at the [CONTRIBUTING.md](https://github.com/mezgoodle/Telegramia-API/blob/master/CONTRIBUTING.md).
 
 ## Credits :cat::handshake:
 
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+Links to videos which help me built this project:
 
-https://www.youtube.com/watch?v=tLKKmouUams
-https://youtu.be/7t2alSnE2-I?t=3528
+[FastAPI Tutorial from freecodecamp](https://www.youtube.com/watch?v=tLKKmouUams)
+
+[FastAPI Tutorial](https://www.youtube.com/watch?v=7t2alSnE2-I)
 
 ## License :bookmark:
 
-MIT © [Yourname]()
+MIT © [mezgoodle](https://github.com/mezgoodle)
