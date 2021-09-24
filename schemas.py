@@ -388,9 +388,9 @@ class UpdateHeroClassModel(BaseModel):
 
 
 class UpdateAdminModel(BaseModel):
-    name: Optional[dict]
-    email: Optional[dict]
-    password: Optional[dict]
+    name: Optional[str]
+    email: Optional[str]
+    password: Optional[str]
 
     class Config:
         arbitrary_types_allowed = True
