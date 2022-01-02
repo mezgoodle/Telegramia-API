@@ -13,7 +13,7 @@ router = APIRouter(
 
 @router.post('', response_description='Add new admin', response_model=AdminModel,
              status_code=status.HTTP_201_CREATED)
-async def create_admin(admin: AdminModel = Body(...), current_user: AdminModel = Depends(get_current_user)):
+async def create_admin(admin: AdminModel = Body(...)):
     """
     Create an API admin with all permissions:
 
