@@ -39,9 +39,9 @@ def test_update_admin():
         data={'username': ADMIN_NICKNAME, 'password': ADMIN_PASSWORD})
     access_token = token_response.json()['access_token']
     response = client.put(
-        '/admin?admin_name=mezgoodle',
+        '/admin?admin_name=mezgoodle111',
         json={
-            "name": "mezgoodle"
+            "name": "mezgoodle1111"
         },
         headers={'Authorization': f'Bearer {access_token}'}
     )
@@ -54,7 +54,7 @@ def test_delete_admin():
         data={'username': ADMIN_NICKNAME, 'password': ADMIN_PASSWORD})
     access_token = token_response.json()['access_token']
     response = client.delete(
-        '/admin?admin_name=mezgoodle111',
+        '/admin?admin_name=mezgoodle1111',
         headers={'Authorization': f'Bearer {access_token}'}
     )
     assert response.status_code == 204
