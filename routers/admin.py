@@ -66,6 +66,7 @@ async def update_admin(identifier: Optional[str] = None, admin_name: Optional[st
     """
     variables = locals()
     options = {'identifier': '_id', 'admin_name': 'name'}
+    admin.password = Hash.bcrypt(admin.password)
     for key in variables.keys():
         if variables[key] is not None:
             return await update_object({options[key]: variables[key]}, admin, 'admins')
