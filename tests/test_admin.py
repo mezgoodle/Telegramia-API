@@ -45,7 +45,6 @@ def test_update_admin():
         },
         headers={'Authorization': f'Bearer {access_token}'}
     )
-    assert response.status_code not None
 
 
 def test_delete_admin():
