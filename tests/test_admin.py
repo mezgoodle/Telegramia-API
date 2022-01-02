@@ -45,6 +45,7 @@ def test_update_admin():
         },
         headers={'Authorization': f'Bearer {access_token}'}
     )
+    assert response.status_code == 201
 
 
 def test_delete_admin():
