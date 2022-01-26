@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, EmailStr, SecretStr
 from bson import ObjectId
 
-from typing import Optional
+from typing import Optional, List
 
 
 class PyObjectId(ObjectId):
@@ -36,7 +36,7 @@ class PlayerModel(BaseModel):
     hero_class: str = Field(...)
     nation: str = Field(...)
     money: float = Field(...)
-    items: list = Field(...)
+    items: List[str] = Field(...)
     mount: dict = Field(...)
     current_state: str = Field(...)
 
@@ -228,20 +228,46 @@ class TokenData(BaseModel):
 
 
 class UpdatePlayerModel(BaseModel):
+    user_id: Optional[str]
+    telegram_name: Optional[str]
     name: Optional[str]
-    email: Optional[EmailStr]
-    course: Optional[str]
-    gpa: Optional[float]
+    level: Optional[float]
+    experience: Optional[float]
+    health: Optional[float]
+    energy: Optional[float]
+    strength: Optional[float]
+    agility: Optional[float]
+    intuition: Optional[float]
+    intelligence: Optional[float]
+    hero_class: Optional[str]
+    nation: Optional[str]
+    money: Optional[float]
+    items: Optional[List[str]]
+    mount: Optional[dict]
+    current_state: Optional[str]
 
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
+                'user_id': '34344334',
+                'telegram_name': 'mezgoodle',
                 "name": "Jane Doe",
-                "email": "jdoe@example.com",
-                "course": "Experiments, Science, and Fashion in Nanophotonics",
-                "gpa": "3.0",
+                "level": 3,
+                "experience": 45,
+                'health': 100.0,
+                'energy': 30.0,
+                "strength": 11.4,
+                "agility": 3.2,
+                'intuition': 55.1,
+                'intelligence': 34.0,
+                'hero_class': 'paladin',
+                'nation': 'Priaria',
+                'money': 123.65,
+                'items': ['wood shield', 'helmet'],
+                'mount': {'name': 'Bob', 'type': 'horse', 'bonus': 12},
+                'current_state': 'Stormwind'
             }
         }
 
