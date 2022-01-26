@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
-from schemas import AdminModel, UpdateAdminModel, ShowAdminModel
+from schemas import AdminModel, UpdateAdminModel
 from typing import Optional, List
 from hashing import Hash
 from oauth2 import get_current_user
@@ -26,7 +26,7 @@ async def create_admin(admin: AdminModel = Body(...), current_user: AdminModel =
     return await create_document(admin, 'admins')
 
 
-@router.get('s', response_description='List all admins', response_model=List[ShowAdminModel],
+@router.get('s', response_description='List all admins', response_model=List[AdminModel],
             status_code=status.HTTP_200_OK)
 async def list_admins():
     """
@@ -36,7 +36,7 @@ async def list_admins():
     return admins
 
 
-@router.get('', response_description='Get a single admin', response_model=ShowAdminModel,
+@router.get('', response_description='Get a single admin', response_model=AdminModel,
             status_code=status.HTTP_200_OK)
 async def show_admin(identifier: Optional[str] = None, admin_name: Optional[str] = None):
     """
