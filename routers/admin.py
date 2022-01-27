@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
-from schemas import AdminModel, UpdateAdminModel
+from schemas import AdminModel
+from update_schemas import UpdateAdminModel
 from typing import Optional, List
 from hashing import Hash
 from oauth2 import get_current_user

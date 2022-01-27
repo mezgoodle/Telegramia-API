@@ -1,7 +1,8 @@
 from fastapi import APIRouter, status, HTTPException, Body, Depends
 from database import get_object, create_document, get_all_objects, update_object, delete_object
 from oauth2 import get_current_user
-from schemas import CityModel, UpdateCityModel, AdminModel
+from schemas import CityModel, AdminModel
+from update_schemas import UpdateCityModel
 from typing import Optional, List
 
 router = APIRouter(
