@@ -12,7 +12,7 @@ def test_get_dungeons():
 
 
 def test_get_dungeon():
-    response = client.get('/dungeon?name=Підземелля Девіона')
+    response = client.get('/dungeon?name=dungeon')
     assert response.status_code == 200
 
 
@@ -24,7 +24,7 @@ def test_post_dungeon():
     response = client.post(
         '/dungeon',
         json={
-            "name": "Підземелля Девіона",
+            "name": "dungeon",
             "description": "Підземелля Девіона",
             "damage": "1000.23",
             "base_time": "2s",
@@ -42,7 +42,7 @@ def test_update_dungeon():
         data={'username': ADMIN_NICKNAME, 'password': ADMIN_PASSWORD})
     access_token = token_response.json()['access_token']
     response = client.put(
-        '/dungeon?name=Підземелля Девіона',
+        '/dungeon?name=dungeon',
         json={
             "damage": 346
         },
@@ -57,7 +57,7 @@ def test_delete_dungeon():
         data={'username': ADMIN_NICKNAME, 'password': ADMIN_PASSWORD})
     access_token = token_response.json()['access_token']
     response = client.delete(
-        '/dungeon?name=Підземелля Девіона',
+        '/dungeon?name=dungeon',
         headers={'Authorization': f'Bearer {access_token}'}
     )
     assert response.status_code == 204

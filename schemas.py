@@ -233,6 +233,21 @@ class DungeonModel(BaseModel):
     treasure: float = Field(...)
     members: Dict[str, timedelta] = Field(...)
 
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'damage': 1231.213,
+                'base_time': 133,
+                'treasure': 12312.323,
+                'members': {'mezgoodle': 12332}
+            }
+        }
+
 
 class TokenData(BaseModel):
     email: Optional[str] = None

@@ -199,3 +199,17 @@ class UpdateDungeonModel(BaseModel):
     base_time: Optional[timedelta]
     treasure: Optional[float]
     members: Optional[Dict[str, timedelta]]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'damage': 1231.213,
+                'base_time': 133,
+                'treasure': 12312.323,
+                'members': {'mezgoodle': 12332}
+            }
+        }
