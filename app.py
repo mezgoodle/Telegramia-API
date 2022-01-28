@@ -46,6 +46,10 @@ tags_metadata = [
         'name': 'Roads',
         'description': 'Operations with roads. They connect all objects in game world.',
     },
+    {
+        'name': 'Dungeons',
+        'description': 'Operations with dungeons. Here players can earn money and experiments.',
+    },
 ]
 
 app = FastAPI(

@@ -24,12 +24,12 @@ def test_post_dungeon():
     response = client.post(
         '/dungeon',
         json={
-            "name": "dungeon",
-            "description": "Підземелля Девіона",
-            "damage": "1000.23",
-            "base_time": "2s",
-            "treasure": "2323.22",
-            "members": {'mezgoodle': '1s'}
+            'name': 'dungeon',
+            'description': 'dungeon',
+            'damage': 1231.213,
+            'base_time': 133,
+            'treasure': 12312.323,
+            'members': {'mezgoodle': 12332}
         },
         headers={'Authorization': f'Bearer {access_token}'}
     )
