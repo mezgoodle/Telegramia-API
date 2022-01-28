@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status
 
-from routers import player, road, country, item, city, heroclass, horse, admin, authentication
+from routers import player, road, country, item, city, heroclass, horse, dungeon, admin, authentication
 
 description = """
 Telegramia API helps you do awesome stuff. 🚀
@@ -73,6 +73,7 @@ app.include_router(item.router)
 app.include_router(city.router)
 app.include_router(heroclass.router)
 app.include_router(horse.router)
+app.include_router(dungeon.router)
 app.include_router(admin.router)
 
 
