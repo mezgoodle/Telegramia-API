@@ -1,3 +1,7 @@
+# 1.1.0 (28.01.22)
+
+- Add dungeons model
+
 # 1.0.1 (24.09.21)
 
 - Clean up the code
