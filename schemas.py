@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, SecretStr
+from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
 from typing import Optional, List, Dict
@@ -209,7 +209,7 @@ class AdminModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     email: str = Field(...)
-    password: SecretStr = Field(...)
+    password: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True
