@@ -1,3 +1,7 @@
+# 1.1.1 (01.02.22)
+
+- Change _SecretStr_ to _str_ in **Admin** models
+
 # 1.1.0 (28.01.22)
 
 - Add dungeons model
