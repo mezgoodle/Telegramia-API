@@ -55,7 +55,7 @@ tags_metadata = [
 app = FastAPI(
     title='Telegramia API',
     description=description,
-    version='1.1.0',
+    version='1.1.1',
     terms_of_service='https://github.com/mezgoodle/Telegramia-API/blob/master/CODE_OF_CONDUCT.md',
     contact={
         'name': 'Maxim Zavalniuk',

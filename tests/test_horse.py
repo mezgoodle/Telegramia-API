@@ -8,12 +8,12 @@ client = TestClient(app)
 
 def test_get_horses():
     response = client.get('/horses')
-    assert response.status_code == 404
+    assert response.status_code == 200
 
 
 def test_get_horse():
-    response = client.get('/horse?horse_name=Воїн')
-    assert response.status_code == 404
+    response = client.get('/horse?horse_name=Кінь для практики')
+    assert response.status_code == 200
 
 
 def test_post_horse():

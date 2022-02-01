@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, SecretStr
+from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
 from typing import Optional, List, Dict
