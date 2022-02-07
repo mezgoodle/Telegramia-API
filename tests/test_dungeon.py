@@ -12,7 +12,7 @@ def test_get_dungeons():
 
 
 def test_get_dungeon():
-    response = client.get('/dungeon?dungeon_name=dungeon')
+    response = client.get('/dungeon?dungeon_name=Dungeon')
     assert response.status_code == 200
 
 
