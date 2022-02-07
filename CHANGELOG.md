@@ -1,3 +1,7 @@
+# 1.1.2 (07.02.22)
+
+- Change _timedelta_ to _datetime_ in **Dungeon** models
+
 # 1.1.1 (01.02.22)
 
 - Change _SecretStr_ to _str_ in **Admin** models

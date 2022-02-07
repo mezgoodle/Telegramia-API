@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
 from typing import Optional, List, Dict
-from datetime import timedelta, date
+from datetime import timedelta, datetime
 
 
 class PyObjectId(ObjectId):
@@ -231,7 +231,7 @@ class DungeonModel(BaseModel):
     damage: float = Field(...)
     base_time: timedelta = Field(...)
     treasure: float = Field(...)
-    members: Dict[str, date] = Field(...)
+    members: Dict[str, datetime] = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -244,7 +244,7 @@ class DungeonModel(BaseModel):
                 'damage': 1231.213,
                 'base_time': 133,
                 'treasure': 12312.323,
-                'members': {'mezgoodle': '2008-09-15'}
+                'members': {'mezgoodle': '2008-09-15T15:53:00+05:00'}
             }
         }
 
