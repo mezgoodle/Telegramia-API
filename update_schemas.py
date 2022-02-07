@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
 from typing import Optional, List, Dict
-from datetime import timedelta
+from datetime import timedelta, date
 
 
 class UpdatePlayerModel(BaseModel):
@@ -198,7 +198,7 @@ class UpdateDungeonModel(BaseModel):
     damage: Optional[float]
     base_time: Optional[timedelta]
     treasure: Optional[float]
-    members: Optional[Dict[str, timedelta]]
+    members: Optional[Dict[str, date]]
 
     class Config:
         arbitrary_types_allowed = True
@@ -210,6 +210,6 @@ class UpdateDungeonModel(BaseModel):
                 'damage': 1231.213,
                 'base_time': 133,
                 'treasure': 12312.323,
-                'members': {'mezgoodle': 12332}
+                'members': {'mezgoodle': '2008-09-15'}
             }
         }

@@ -21,9 +21,9 @@ async def create_dungeon(dungeon: DungeonModel = Body(...), current_user: AdminM
     - **name**: dungeon's name
     - **description**: dungeon's dictionary
     - **damage**: damage value that player will get
-    - **base_time**: basic time to take dungeon
+    - **base_time**: basic time to take dungeon, total float number in seconds
     - **treasure**: money value that player will get
-    - **members**: dictionary with player's name and his time to take dungeon
+    - **members**: dictionary with player's name and his date, when he has started, as a str
     """
     return await create_document(dungeon, 'dungeons')
 
@@ -66,9 +66,9 @@ async def update_dungeon(identifier: Optional[str] = None, dungeon_name: Optiona
     - **dungeon_name**: dungeon's name
     - **description**: dungeon's dictionary
     - **damage**: damage value that player will get
-    - **base_time**: basic time to take dungeon
+    - **base_time**: basic time to take dungeon, total float number in seconds
     - **treasure**: money value that player will get
-    - **members**: dictionary with player's name and his time to take dungeon
+    - **members**: dictionary with player's name and his date, when he has started, as a str
     """
     variables = locals()
     options = {'identifier': '_id', 'dungeon_name': 'name'}
