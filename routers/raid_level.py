@@ -7,22 +7,23 @@ from database import (
     update_object,
     delete_object,
 )
-from schemas import RaidModel, AdminModel
-from update_schemas import UpdateRaidModel
+from schemas import RaidLevelModel, AdminModel
+from update_schemas import UpdateRaidLevelModel
 from oauth2 import get_current_user
 from typing import Optional, List
 
-router = APIRouter(prefix="/raid", tags=["Raids and raids' levels"])
+router = APIRouter(prefix="/raid_level", tags=["Raids and raids' levels"])
 
 
 @router.post(
     "",
     response_description="Add new raid",
-    response_model=RaidModel,
+    response_model=RaidLevelModel,
     status_code=status.HTTP_201_CREATED,
 )
-async def create_raid(
-    raid: RaidModel = Body(...), current_user: AdminModel = Depends(get_current_user)
+async def create_raid_level(
+    raid_level: RaidLevelModel = Body(...),
+    current_user: AdminModel = Depends(get_current_user),
 ):
     """
     Create a raid:
@@ -33,44 +34,35 @@ async def create_raid(
     - **capital**: capital name of the country
     - **population**: population of the country
     """
-    return await create_document(raid, "raids")
+    if await get_object({"name": raid_level["raid_name"]}, "raids"):
+        return await create_document(raid_level, "raid_levels")
+    raise HTTPException(
+        status_code=404,
+        detail=f"There is no raid with the name {raid_level['raid_name']}",
+    )
 
 
 @router.get(
     "s",
     response_description="List all raids",
-    response_model=List[RaidModel],
+    response_model=List[RaidLevelModel],
     status_code=status.HTTP_200_OK,
 )
-async def list_raids():
+async def list_raid_levels():
     """
     Get all raids
     """
-    raids = await get_all_objects("raids")
+    raids = await get_all_objects("raid_levels")
     return raids
-
-
-@router.get(
-    "levels",
-    response_description="List all raids",
-    response_model=List[RaidModel],
-    status_code=status.HTTP_200_OK,
-)
-async def list_raidlevels(name: Optional[str] = None):
-    """
-    Get all raids
-    """
-    raid_levels = await get_all_objects("raid_levels", {"name": name})
-    return raid_levels
 
 
 @router.get(
     "",
     response_description="Get a single raid",
-    response_model=RaidModel,
+    response_model=RaidLevelModel,
     status_code=status.HTTP_200_OK,
 )
-async def show_raid(identifier: Optional[str] = None, name: Optional[str] = None):
+async def show_raid_level(identifier: Optional[str] = None, name: Optional[str] = None):
     """
     Show a country by name or capital name:
 
@@ -81,20 +73,20 @@ async def show_raid(identifier: Optional[str] = None, name: Optional[str] = None
     options = {"identifier": "_id", "name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await get_object({options[key]: variables[key]}, "raids")
+            return await get_object({options[key]: variables[key]}, "raid_levels")
     raise HTTPException(status_code=404, detail="Set some parameters")
 
 
 @router.put(
     "",
     response_description="Update a raid",
-    response_model=UpdateRaidModel,
+    response_model=UpdateRaidLevelModel,
     status_code=status.HTTP_200_OK,
 )
-async def update_raid(
+async def update_raid_level(
     identifier: Optional[str] = None,
     name: Optional[str] = None,
-    raid: UpdateRaidModel = Body(...),
+    raid_level: UpdateRaidLevelModel = Body(...),
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
@@ -108,14 +100,18 @@ async def update_raid(
     options = {"identifier": "_id", "name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await update_object({options[key]: variables[key]}, raid, "raids")
+            return await update_object(
+                {options[key]: variables[key]}, raid_level, "raid_levels"
+            )
     raise HTTPException(status_code=404, detail="Set some parameters")
 
 
 @router.delete(
-    "", response_description="Delete a raid", status_code=status.HTTP_204_NO_CONTENT
+    "",
+    response_description="Delete a raid level",
+    status_code=status.HTTP_204_NO_CONTENT,
 )
-async def delete_raid(
+async def delete_raid_level(
     identifier: Optional[str] = None,
     name: Optional[str] = None,
     current_user: AdminModel = Depends(get_current_user),
@@ -131,5 +127,5 @@ async def delete_raid(
     options = {"identifier": "_id", "name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await delete_object({options[key]: variables[key]}, "raids")
+            return await delete_object({options[key]: variables[key]}, "raid_levels")
     raise HTTPException(status_code=404, detail="Set some parameters")
