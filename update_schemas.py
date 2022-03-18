@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Union
 from datetime import timedelta, datetime
 
 
@@ -211,5 +211,43 @@ class UpdateDungeonModel(BaseModel):
                 'base_time': 133,
                 'treasure': 12312.323,
                 'members': {'mezgoodle': '2008-09-15T15:53:00+05:00'}
+            }
+        }
+
+
+class UpdateRaidModel(BaseModel):
+    name: Optional[str]
+    description: Optional[str]
+    treasure: Optional[float]
+    members: Optional[Dict[str, Dict[str, Union[datetime, int]]]]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'treasure': 12312.323,
+                'members': {'mezgoodle': {'time': '2008-09-15T15:53:00+05:00', 'level': 1}}
+            }
+        }
+
+
+class RaidLevelModel(BaseModel):
+    name: Optional[str]
+    description: Optional[str]
+    damage: Optional[float]
+    base_time: Optional[timedelta]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'damage': 1231.213,
+                'base_time': 133,
             }
         }

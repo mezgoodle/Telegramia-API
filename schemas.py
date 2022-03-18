@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Union
 from datetime import timedelta, datetime
 
 
@@ -245,6 +245,48 @@ class DungeonModel(BaseModel):
                 'base_time': 133,
                 'treasure': 12312.323,
                 'members': {'mezgoodle': '2008-09-15T15:53:00+05:00'}
+            }
+        }
+
+
+class RaidModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    description: str = Field(...)
+    treasure: float = Field(...)
+    members: Dict[str, Dict[str, Union[datetime, int]]] = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'treasure': 12312.323,
+                'members': {'mezgoodle': {'time': '2008-09-15T15:53:00+05:00', 'level': 1}}
+            }
+        }
+
+
+class RaidLevelModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    description: str = Field(...)
+    damage: float = Field(...)
+    base_time: timedelta = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                'name': 'dungeon',
+                'description': 'dungeon',
+                'damage': 1231.213,
+                'base_time': 133,
             }
         }
 
