@@ -11,12 +11,12 @@ def test_get_raid_levels():
     assert response.status_code == 200
 
 
-def test_get_raid():
+def test_get_raid_level():
     response = client.get("/raid_level?name=raid_level")
     assert response.status_code == 200
 
 
-def test_post_raid():
+def test_post_raid_level():
     token_response = client.post(
         "/login", data={"username": ADMIN_NICKNAME, "password": ADMIN_PASSWORD}
     )
@@ -35,7 +35,7 @@ def test_post_raid():
     assert response.status_code == 201
 
 
-def test_update_raid():
+def test_update_raid_level():
     token_response = client.post(
         "/login", data={"username": ADMIN_NICKNAME, "password": ADMIN_PASSWORD}
     )
@@ -48,7 +48,7 @@ def test_update_raid():
     assert response.status_code == 200
 
 
-def test_delete_raid():
+def test_delete_raid_level():
     token_response = client.post(
         "/login", data={"username": ADMIN_NICKNAME, "password": ADMIN_PASSWORD}
     )
