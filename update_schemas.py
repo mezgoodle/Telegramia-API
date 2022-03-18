@@ -234,7 +234,7 @@ class UpdateRaidModel(BaseModel):
         }
 
 
-class RaidLevelModel(BaseModel):
+class UpdateRaidLevelModel(BaseModel):
     name: Optional[str]
     description: Optional[str]
     damage: Optional[float]
