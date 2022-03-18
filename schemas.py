@@ -286,7 +286,7 @@ class RaidLevelModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                "name": "dungeon",
+                "name": "raid_level",
                 "raid_name": "raid",
                 "description": "dungeon",
                 "damage": 1231.213,
