@@ -47,23 +47,23 @@ class PlayerModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                'user_id': '34344334',
-                'telegram_name': 'mezgoodle',
+                "user_id": "34344334",
+                "telegram_name": "mezgoodle",
                 "name": "Jane Doe",
                 "level": 3,
                 "experience": 45,
-                'health': 100.0,
-                'energy': 30.0,
+                "health": 100.0,
+                "energy": 30.0,
                 "strength": 11.4,
                 "agility": 3.2,
-                'intuition': 55.1,
-                'intelligence': 34.0,
-                'hero_class': 'paladin',
-                'nation': 'Priaria',
-                'money': 123.65,
-                'items': ['wood shield', 'helmet'],
-                'mount': {'name': 'Bob', 'type': 'horse', 'bonus': 12},
-                'current_state': 'Stormwind'
+                "intuition": 55.1,
+                "intelligence": 34.0,
+                "hero_class": "paladin",
+                "nation": "Priaria",
+                "money": 123.65,
+                "items": ["wood shield", "helmet"],
+                "mount": {"name": "Bob", "type": "horse", "bonus": 12},
+                "current_state": "Stormwind",
             }
         }
 
@@ -172,13 +172,13 @@ class CityModel(BaseModel):
         schema_extra = {
             "example": {
                 "name": "Stormwind",
-                'country': 'Alliance',
+                "country": "Alliance",
                 "is_capital": True,
-                'market': True,
-                'academy': False,
-                'temple': False,
-                'tavern': True,
-                'menagerie': True
+                "market": True,
+                "academy": False,
+                "temple": False,
+                "tavern": True,
+                "menagerie": True,
             }
         }
 
@@ -194,13 +194,13 @@ class HeroClassModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                "name": 'Воїн',
+                "name": "Воїн",
                 "characteristics": {
-                    'strength': 0.0,
-                    'agility': 0.0,
-                    'intuition': 0.0,
-                    'intelligence': 0.0
-                }
+                    "strength": 0.0,
+                    "agility": 0.0,
+                    "intuition": 0.0,
+                    "intelligence": 0.0,
+                },
             }
         }
 
@@ -217,9 +217,9 @@ class AdminModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                'name': 'mezgoodle',
-                'email': 'mezgoodle@gmail.com',
-                'password': '123456'
+                "name": "mezgoodle",
+                "email": "mezgoodle@gmail.com",
+                "password": "123456",
             }
         }
 
@@ -239,12 +239,12 @@ class DungeonModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                'name': 'dungeon',
-                'description': 'dungeon',
-                'damage': 1231.213,
-                'base_time': 133,
-                'treasure': 12312.323,
-                'members': {'mezgoodle': '2008-09-15T15:53:00+05:00'}
+                "name": "dungeon",
+                "description": "dungeon",
+                "damage": 1231.213,
+                "base_time": 133,
+                "treasure": 12312.323,
+                "members": {"mezgoodle": "2008-09-15T15:53:00+05:00"},
             }
         }
 
@@ -262,10 +262,12 @@ class RaidModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                'name': 'dungeon',
-                'description': 'dungeon',
-                'treasure': 12312.323,
-                'members': {'mezgoodle': {'time': '2008-09-15T15:53:00+05:00', 'level': 1}}
+                "name": "dungeon",
+                "description": "dungeon",
+                "treasure": 12312.323,
+                "members": {
+                    "mezgoodle": {"time": "2008-09-15T15:53:00+05:00", "level": 1}
+                },
             }
         }
 
@@ -283,10 +285,10 @@ class RaidLevelModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                'name': 'dungeon',
-                'description': 'dungeon',
-                'damage': 1231.213,
-                'base_time': 133,
+                "name": "dungeon",
+                "description": "dungeon",
+                "damage": 1231.213,
+                "base_time": 133,
             }
         }
 
