@@ -12,6 +12,7 @@ from routers import (
     admin,
     authentication,
     raid,
+    raid_level,
 )
 
 description = """
@@ -92,6 +93,7 @@ app.include_router(horse.router)
 app.include_router(dungeon.router)
 app.include_router(admin.router)
 app.include_router(raid.router)
+app.include_router(raid_level.router)
 
 
 @app.get("/", status_code=status.HTTP_200_OK)
