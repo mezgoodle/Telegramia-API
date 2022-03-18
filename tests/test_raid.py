@@ -12,7 +12,7 @@ def test_get_raids():
 
 
 def test_get_raid():
-    response = client.get("/raid?name=Dungeon")
+    response = client.get("/raid?name=raid")
     assert response.status_code == 200
 
 
@@ -24,12 +24,10 @@ def test_post_raid():
     response = client.post(
         "/raid",
         json={
-            "name": "dungeon",
-            "description": "dungeon",
-            "damage": 1231.213,
-            "base_time": 133,
+            "name": "Raid",
+            "description": "raid",
             "treasure": 12312.323,
-            "members": {"mezgoodle": "2008-09-15T15:53:00+05:00"},
+            "members": {"mezgoodle": {"time": "2008-09-15T15:53:00+05:00", "level": 1}},
         },
         headers={"Authorization": f"Bearer {access_token}"},
     )
@@ -42,7 +40,7 @@ def test_update_raid():
     )
     access_token = token_response.json()["access_token"]
     response = client.put(
-        "/raid?name=dungeon",
+        "/raid?name=Raid",
         json={"damage": 346},
         headers={"Authorization": f"Bearer {access_token}"},
     )
@@ -55,6 +53,6 @@ def test_delete_raid():
     )
     access_token = token_response.json()["access_token"]
     response = client.delete(
-        "/raid?name=dungeon", headers={"Authorization": f"Bearer {access_token}"}
+        "/raid?name=Raid", headers={"Authorization": f"Bearer {access_token}"}
     )
     assert response.status_code == 204
