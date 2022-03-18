@@ -60,7 +60,7 @@ async def list_raidlevels(name: Optional[str] = None):
     """
     Get all raids
     """
-    raid_levels = await get_all_objects("raid_levels", {"name": name})
+    raid_levels = await get_all_objects("raid_levels", {"raid_name": name})
     return raid_levels
 
 
