@@ -55,7 +55,12 @@ async def create_raid_level(
     - **capital**: capital name of the country
     - **population**: population of the country
     """
-    return await create_document(raid_level, "raid_levels")
+    if await get_object({"name": raid_level["raid_name"]}, "raids"):
+        return await create_document(raid_level, "raid_levels")
+    raise HTTPException(
+        status_code=404,
+        detail=f"There is no raid with the name {raid_level['raid_name']}",
+    )
 
 
 @router.get(
