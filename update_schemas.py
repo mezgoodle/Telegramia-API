@@ -239,6 +239,7 @@ class UpdateRaidModel(BaseModel):
 class UpdateRaidLevelModel(BaseModel):
     name: Optional[str]
     raid_name: Optional[str]
+    level: Optional[int]
     description: Optional[str]
     damage: Optional[float]
     base_time: Optional[timedelta]
@@ -250,6 +251,7 @@ class UpdateRaidLevelModel(BaseModel):
             "example": {
                 "name": "dungeon",
                 "raid_name": "raid",
+                "level": 1,
                 "description": "dungeon",
                 "damage": 1231.213,
                 "base_time": 133,

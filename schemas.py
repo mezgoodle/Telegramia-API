@@ -276,6 +276,7 @@ class RaidLevelModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     raid_name: str = Field(...)
+    level: int = Field(...)
     description: str = Field(...)
     damage: float = Field(...)
     base_time: timedelta = Field(...)
@@ -288,6 +289,7 @@ class RaidLevelModel(BaseModel):
             "example": {
                 "name": "raid_level",
                 "raid_name": "raid",
+                "level": 1,
                 "description": "dungeon",
                 "damage": 1231.213,
                 "base_time": 133,
