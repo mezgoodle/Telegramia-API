@@ -218,7 +218,6 @@ class UpdateDungeonModel(BaseModel):
 class UpdateRaidModel(BaseModel):
     name: Optional[str]
     description: Optional[str]
-    treasure: Optional[float]
     members: Optional[Dict[str, Dict[str, Union[datetime, int]]]]
 
     class Config:
@@ -228,7 +227,6 @@ class UpdateRaidModel(BaseModel):
             "example": {
                 "name": "dungeon",
                 "description": "dungeon",
-                "treasure": 12312.323,
                 "members": {
                     "mezgoodle": {"time": "2008-09-15T15:53:00+05:00", "level": 1}
                 },
@@ -242,6 +240,7 @@ class UpdateRaidLevelModel(BaseModel):
     level: Optional[int]
     description: Optional[str]
     damage: Optional[float]
+    treasure: Optional[float]
     base_time: Optional[timedelta]
 
     class Config:
@@ -254,6 +253,7 @@ class UpdateRaidLevelModel(BaseModel):
                 "level": 1,
                 "description": "dungeon",
                 "damage": 1231.213,
+                "treasure": 12312.323,
                 "base_time": 133,
             }
         }

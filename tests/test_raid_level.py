@@ -29,6 +29,7 @@ def test_post_raid_level():
             "level": 1,
             "description": "dungeon",
             "damage": 1231.213,
+            "treasure": 12312.323,
             "base_time": 133,
         },
         headers={"Authorization": f"Bearer {access_token}"},

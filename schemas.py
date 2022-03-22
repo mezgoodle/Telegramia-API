@@ -253,7 +253,6 @@ class RaidModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     description: str = Field(...)
-    treasure: float = Field(...)
     members: Dict[str, Dict[str, Union[datetime, int]]] = Field(...)
 
     class Config:
@@ -264,7 +263,6 @@ class RaidModel(BaseModel):
             "example": {
                 "name": "dungeon",
                 "description": "dungeon",
-                "treasure": 12312.323,
                 "members": {
                     "mezgoodle": {"time": "2008-09-15T15:53:00+05:00", "level": 1}
                 },
@@ -279,6 +277,7 @@ class RaidLevelModel(BaseModel):
     level: int = Field(...)
     description: str = Field(...)
     damage: float = Field(...)
+    treasure: float = Field(...)
     base_time: timedelta = Field(...)
 
     class Config:
@@ -292,6 +291,7 @@ class RaidLevelModel(BaseModel):
                 "level": 1,
                 "description": "dungeon",
                 "damage": 1231.213,
+                "treasure": 12312.323,
                 "base_time": 133,
             }
         }
