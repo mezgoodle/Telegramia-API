@@ -253,7 +253,7 @@ class RaidModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     description: str = Field(...)
-    members: Dict[str, Dict[str, Union[datetime, int]]] = Field(...)
+    members: Dict[str, Dict[str, Union[int, datetime]]] = Field(...)
 
     class Config:
         allow_population_by_field_name = True
