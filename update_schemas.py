@@ -222,6 +222,7 @@ class UpdateRaidModel(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        smart_union = True
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
