@@ -56,18 +56,23 @@ async def list_horses():
     status_code=status.HTTP_200_OK,
 )
 async def show_horse(
-    identifier: Optional[str] = None, horse_name: Optional[str] = None
+    identifier: Optional[str] = None,
+    horse_name: Optional[str] = None,
+    city_name: str = None,
 ):
     """
     Get a horse by name
 
     - **horse_name**: horse name
+    - **city_name**: city name, where item is selling
     """
     variables = locals()
     options = {"identifier": "_id", "horse_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await get_object({options[key]: variables[key]}, "horses")
+            return await get_object(
+                {options[key]: variables[key], "city": city_name}, "horses"
+            )
     raise HTTPException(status_code=404, detail="Set some parameters")
 
 
@@ -80,6 +85,7 @@ async def show_horse(
 async def update_horse(
     identifier: Optional[str] = None,
     horse_name: Optional[str] = None,
+    city_name: str = None,
     horse: UpdateHorseModel = Body(...),
     current_user: AdminModel = Depends(get_current_user),
 ):
@@ -88,6 +94,7 @@ async def update_horse(
 
     - **current user** should be admin
     - **horse_name**: horse name
+    - **city_name**: city name, where item is selling
     - **name**: horse name
     - **bonus**: speed bonus from horse
     - **city**: city name, where horse is selling
@@ -97,7 +104,9 @@ async def update_horse(
     options = {"identifier": "_id", "horse_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await update_object({options[key]: variables[key]}, horse, "horses")
+            return await update_object(
+                {options[key]: variables[key], "city": city_name}, horse, "horses"
+            )
     raise HTTPException(status_code=404, detail="Set some parameters")
 
 
@@ -107,6 +116,7 @@ async def update_horse(
 async def delete_horse(
     identifier: Optional[str] = None,
     horse_name: Optional[str] = None,
+    city_name: str = None,
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
@@ -114,10 +124,13 @@ async def delete_horse(
 
     - **current user** should be admin
     - **horse_name**: horse name
+    - **city_name**: city name, where item is selling
     """
     variables = locals()
     options = {"identifier": "_id", "horse_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
-            return await delete_object({options[key]: variables[key]}, "horses")
+            return await delete_object(
+                {options[key]: variables[key], "city": city_name}, "horses"
+            )
     raise HTTPException(status_code=404, detail="Set some parameters")

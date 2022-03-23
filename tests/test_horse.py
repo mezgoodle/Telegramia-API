@@ -12,7 +12,7 @@ def test_get_horses():
 
 
 def test_get_horse():
-    response = client.get("/horse?horse_name=Кінь для практики")
+    response = client.get("/horse?horse_name=Кінь для практики&city_name=Брісвель")
     assert response.status_code == 200
 
 
@@ -35,7 +35,7 @@ def test_update_horse():
     )
     access_token = token_response.json()["access_token"]
     response = client.put(
-        "/horse?horse_name=White faster",
+        "/horse?horse_name=White faster&city_name=Stormwind",
         json={"price": 100},
         headers={"Authorization": f"Bearer {access_token}"},
     )
@@ -48,7 +48,7 @@ def test_delete_horse():
     )
     access_token = token_response.json()["access_token"]
     response = client.delete(
-        "/horse?horse_name=White faster",
+        "/horse?horse_name=White faster&city_name=Stormwind",
         headers={"Authorization": f"Bearer {access_token}"},
     )
     assert response.status_code == 204
