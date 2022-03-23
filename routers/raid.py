@@ -7,7 +7,7 @@ from database import (
     update_object,
     delete_object,
 )
-from schemas import RaidModel, AdminModel
+from schemas import RaidModel, RaidLevelModel, AdminModel
 from update_schemas import UpdateRaidModel
 from oauth2 import get_current_user
 from typing import Optional, List
@@ -53,7 +53,7 @@ async def list_raids():
 @router.get(
     "levels",
     response_description="List all raids",
-    response_model=List[RaidModel],
+    response_model=List[RaidLevelModel],
     status_code=status.HTTP_200_OK,
 )
 async def list_raidlevels(name: Optional[str] = None):
