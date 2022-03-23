@@ -43,7 +43,7 @@ def test_update_raid_level():
     )
     access_token = token_response.json()["access_token"]
     response = client.put(
-        "/raid_level?name=raid_level1",
+        "/raid_level?level_name=raid_level1",
         json={"damage": 346},
         headers={"Authorization": f"Bearer {access_token}"},
     )
@@ -56,7 +56,7 @@ def test_delete_raid_level():
     )
     access_token = token_response.json()["access_token"]
     response = client.delete(
-        "/raid_level?name=raid_level1",
+        "/raid_level?level_name=raid_level1",
         headers={"Authorization": f"Bearer {access_token}"},
     )
     assert response.status_code == 204
