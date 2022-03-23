@@ -17,7 +17,7 @@ router = APIRouter(prefix="/raid_level", tags=["Raids and raids' levels"])
 
 @router.post(
     "",
-    response_description="Add new raid",
+    response_description="Add new raid level",
     response_model=RaidLevelModel,
     status_code=status.HTTP_201_CREATED,
 )
@@ -26,13 +26,16 @@ async def create_raid_level(
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
-    Create a raid:
+    Create a raid level:
 
     - **current user** should be admin
-    - **name**: country name
-    - **description**: country description
-    - **capital**: capital name of the country
-    - **population**: population of the country
+    - **name**: level name
+    - **raid_name**: name of the raid
+    - **level**: level number
+    - **description**: level description
+    - **damage**: player's damage
+    - **treasure**: player's treasure
+    - **base_time**: time to take a level
     """
     if await get_object({"name": raid_level.dict()["raid_name"]}, "raids"):
         return await create_document(raid_level, "raid_levels")
@@ -44,7 +47,7 @@ async def create_raid_level(
 
 @router.get(
     "s",
-    response_description="List all raids",
+    response_description="List all raid levels",
     response_model=List[RaidLevelModel],
     status_code=status.HTTP_200_OK,
 )
@@ -58,19 +61,20 @@ async def list_raid_levels():
 
 @router.get(
     "",
-    response_description="Get a single raid",
+    response_description="Get a single raid level",
     response_model=RaidLevelModel,
     status_code=status.HTTP_200_OK,
 )
-async def show_raid_level(identifier: Optional[str] = None, name: Optional[str] = None):
+async def show_raid_level(
+    identifier: Optional[str] = None, level_name: Optional[str] = None
+):
     """
-    Show a country by name or capital name:
+    Show a level by name:
 
-    - **name**: country name
-    - **capital**: capital name of the country
+    - **level_name**: country name
     """
     variables = locals()
-    options = {"identifier": "_id", "name": "name"}
+    options = {"identifier": "_id", "level_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
             return await get_object({options[key]: variables[key]}, "raid_levels")
@@ -85,19 +89,25 @@ async def show_raid_level(identifier: Optional[str] = None, name: Optional[str] 
 )
 async def update_raid_level(
     identifier: Optional[str] = None,
-    name: Optional[str] = None,
+    level_name: Optional[str] = None,
     raid_level: UpdateRaidLevelModel = Body(...),
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
-    Update a country by name or capital name:
+    Update a level by name:
 
     - **current user** should be admin
-    - **name**: country name
-    - **capital**: capital name of the country
+    - **level_name**: country name
+    - **name**: level name
+    - **raid_name**: name of the raid
+    - **level**: level number
+    - **description**: level description
+    - **damage**: player's damage
+    - **treasure**: player's treasure
+    - **base_time**: time to take a level
     """
     variables = locals()
-    options = {"identifier": "_id", "name": "name"}
+    options = {"identifier": "_id", "level_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
             return await update_object(
@@ -113,18 +123,17 @@ async def update_raid_level(
 )
 async def delete_raid_level(
     identifier: Optional[str] = None,
-    name: Optional[str] = None,
+    level_name: Optional[str] = None,
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
-    Delete a country by name or capital name:
+    Delete a level by name:
 
     - **current user** should be admin
-    - **name**: country name
-    - **capital**: capital name of the country
+    - **level_name**: country name
     """
     variables = locals()
-    options = {"identifier": "_id", "name": "name"}
+    options = {"identifier": "_id", "level_name": "name"}
     for key in variables.keys():
         if variables[key] is not None:
             return await delete_object({options[key]: variables[key]}, "raid_levels")
