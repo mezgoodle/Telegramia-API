@@ -57,7 +57,7 @@ async def list_raids():
 )
 async def list_raidlevels(raid_name: Optional[str] = None):
     """
-    Get all raid levels by raid level:
+    Get all raid levels by raid name:
 
     - **raid_name**: raid name
     """

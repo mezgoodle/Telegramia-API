@@ -75,7 +75,7 @@ async def show_player(
     username: Optional[str] = None,
 ):
     """
-    Get an item by nickname or username
+    Get a player by nickname or username
 
     - **nickname**: player name in the game
     - **username**: player name in the Telegram
@@ -102,7 +102,7 @@ async def update_player(
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
-    Get an item by nickname or username
+    Update a player by nickname or username
 
     - **current user** should be admin
     - **nickname**: player name in the game
@@ -145,7 +145,7 @@ async def delete_player(
     current_user: AdminModel = Depends(get_current_user),
 ):
     """
-    Get an item by nickname or username
+    Delete a player by nickname or username
 
     - **current user** should be admin
     - **nickname**: player name in the game
