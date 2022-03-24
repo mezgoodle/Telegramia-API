@@ -1,3 +1,9 @@
+# 1.2.1 (24.03.22)
+
+- Update **Item** model.
+
+**Full Changelog**: https://github.com/mezgoodle/Telegramia-API/compare/v1.2.0...v1.2.1
+
 # 1.2.0 (24.03.22)
 
 - Create **Raid** and **RaidLevel** models.
