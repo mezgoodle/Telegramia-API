@@ -29,6 +29,7 @@ async def create_item(
     - **current user** should be admin
     - **name**: item name
     - **characteristic**: the name of the characteristic which will have a bonus
+    - **type**: type of item
     - **bonus**: bonus from item to characteristic
     - **city**: city, where item is selling
     - **price**: price of the item
@@ -99,6 +100,7 @@ async def update_item(
     - **city_name**: city name, where item is selling
     - **name**: item name
     - **characteristic**: the name of the characteristic which will have a bonus
+    - **type**: type of item
     - **bonus**: bonus from item to characteristic
     - **city**: city, where item is selling
     - **price**: price of the item

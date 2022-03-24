@@ -26,6 +26,7 @@ def test_post_item():
         json={
             "name": "Wood helmet1",
             "characteristic": "strength",
+            "type": "helmet",
             "bonus": 13.3,
             "city": "Stormwind",
             "price": 34,

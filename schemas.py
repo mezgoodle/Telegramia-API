@@ -114,6 +114,7 @@ class ItemModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     characteristic: str = Field(...)
+    type: str = Field(...)
     bonus: float = Field(...)
     city: str = Field(...)
     price: float = Field(...)
@@ -126,6 +127,7 @@ class ItemModel(BaseModel):
             "example": {
                 "name": "Wood helmet",
                 "characteristic": "strength",
+                "type": "helmet",
                 "bonus": 13.3,
                 "city": "Stormwind",
                 "price": 34.0,

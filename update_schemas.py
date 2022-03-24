@@ -91,6 +91,7 @@ class UpdateCountryModel(BaseModel):
 class UpdateItemModel(BaseModel):
     name: Optional[str]
     characteristic: Optional[str]
+    type: Optional[str]
     bonus: Optional[float]
     city: Optional[str]
     price: Optional[float]
@@ -102,6 +103,7 @@ class UpdateItemModel(BaseModel):
             "example": {
                 "name": "Wood helmet",
                 "characteristic": "strength",
+                "type": "helmet",
                 "bonus": 13.3,
                 "city": "Stormwind",
                 "price": 34.0,
