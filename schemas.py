@@ -120,7 +120,7 @@ class ItemModel(BaseModel):
     bonus: float = Field(...)
     city: str = Field(...)
     price: float = Field(...)
-    count : int = Field(...)
+    count: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -145,6 +145,7 @@ class HorseModel(BaseModel):
     bonus: float = Field(...)
     city: str = Field(...)
     price: float = Field(...)
+    count: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -156,6 +157,7 @@ class HorseModel(BaseModel):
                 "bonus": 13.3,
                 "city": "Stormwind",
                 "price": 34.0,
+                "count": 0,
             }
         }
 

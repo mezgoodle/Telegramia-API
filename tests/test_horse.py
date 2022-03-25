@@ -23,7 +23,13 @@ def test_post_horse():
     access_token = token_response.json()["access_token"]
     response = client.post(
         "/horse",
-        json={"name": "White faster", "bonus": 13.3, "city": "Stormwind", "price": 34},
+        json={
+            "name": "White faster",
+            "bonus": 13.3,
+            "city": "Stormwind",
+            "price": 34,
+            "count": 1,
+        },
         headers={"Authorization": f"Bearer {access_token}"},
     )
     assert response.status_code == 201

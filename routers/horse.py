@@ -31,6 +31,7 @@ async def create_horse(
     - **bonus**: speed bonus from horse
     - **city**: city name, where horse is selling
     - **price**: price of the horse
+    - **count**: number of purchases of the horse
     """
     return await create_document(horse, "horses")
 
@@ -99,6 +100,7 @@ async def update_horse(
     - **bonus**: speed bonus from horse
     - **city**: city name, where horse is selling
     - **price**: price of the horse
+    - **count**: number of purchases of the horse
     """
     variables = locals()
     options = {"identifier": "_id", "horse_name": "name"}
