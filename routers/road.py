@@ -31,6 +31,7 @@ async def create_road(
     - **from_obj**: name of the place, where the road starts
     - **to_obj**: name of the place, where the road ends
     - **energy**: value of energy that player needs to pass the road
+    - **travelers**: number of players that passed the road
     """
     return await create_document(road, "roads")
 
@@ -90,6 +91,7 @@ async def update_road(
     - **from_obj**: name of the place, where the road starts
     - **to_obj**: name of the place, where the road ends
     - **energy**: value of energy that player needs to pass the road
+    - **travelers**: number of players that passed the road
     """
     variables = locals()
     options = {"identifier": "_id", "road_name": "name"}

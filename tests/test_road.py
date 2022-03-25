@@ -28,6 +28,7 @@ def test_post_road():
             "from_obj": "Ogrimmar",
             "to_obj": "Stormwind",
             "energy": "13.4",
+            "travelers": 0,
         },
         headers={"Authorization": f"Bearer {access_token}"},
     )

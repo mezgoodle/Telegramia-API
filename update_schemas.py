@@ -55,6 +55,7 @@ class UpdateRoadModel(BaseModel):
     to_obj: Optional[str]
     name: Optional[str]
     energy: Optional[float]
+    travelers: Optional[int]
 
     class Config:
         arbitrary_types_allowed = True
@@ -65,6 +66,7 @@ class UpdateRoadModel(BaseModel):
                 "from_obj": "Ogrimmar",
                 "to_obj": "Stormwind",
                 "energy": "13.4",
+                "travelers": 1,
             }
         }
 

@@ -74,6 +74,7 @@ class RoadModel(BaseModel):
     to_obj: str = Field(...)
     name: str = Field(...)
     energy: float = Field(...)
+    travelers: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -85,6 +86,7 @@ class RoadModel(BaseModel):
                 "from_obj": "Ogrimmar",
                 "to_obj": "Stormwind",
                 "energy": "13.4",
+                "travelers": 0,
             }
         }
 
