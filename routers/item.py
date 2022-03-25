@@ -33,6 +33,7 @@ async def create_item(
     - **bonus**: bonus from item to characteristic
     - **city**: city, where item is selling
     - **price**: price of the item
+    - **count**: number of purchases of the item
     """
     return await create_document(item, "items")
 
@@ -104,6 +105,7 @@ async def update_item(
     - **bonus**: bonus from item to characteristic
     - **city**: city, where item is selling
     - **price**: price of the item
+    - **count**: number of purchases of the item
     """
     variables = locals()
     options = {"identifier": "_id", "item_name": "name"}

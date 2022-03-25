@@ -97,6 +97,7 @@ class UpdateItemModel(BaseModel):
     bonus: Optional[float]
     city: Optional[str]
     price: Optional[float]
+    count: Optional[int]
 
     class Config:
         arbitrary_types_allowed = True
@@ -109,6 +110,7 @@ class UpdateItemModel(BaseModel):
                 "bonus": 13.3,
                 "city": "Stormwind",
                 "price": 34.0,
+                "count": 0,
             }
         }
 
