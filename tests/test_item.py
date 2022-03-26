@@ -30,7 +30,7 @@ def test_post_item():
             "bonus": 13.3,
             "city": "Stormwind",
             "price": 34,
-            "item": 0,
+            "count": 0,
         },
         headers={"Authorization": f"Bearer {access_token}"},
     )
