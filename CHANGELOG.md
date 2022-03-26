@@ -1,3 +1,10 @@
+# 1.2.2 (26.03.22)
+
+- Update **Road**, **Item**, **Horse** and **HeroClass** models with the field with common meaning.
+- Closed #36.
+
+**Full Changelog**: https://github.com/mezgoodle/Telegramia-API/compare/v1.2.1...v1.2.2
+
 # 1.2.1 (24.03.22)
 
 - Update **Item** model.
