@@ -166,6 +166,7 @@ class UpdateHorseModel(BaseModel):
 class UpdateHeroClassModel(BaseModel):
     name: Optional[str]
     characteristics: Optional[dict]
+    choices: Optional[int]
 
     class Config:
         arbitrary_types_allowed = True
@@ -179,6 +180,7 @@ class UpdateHeroClassModel(BaseModel):
                     "intuition": 0.0,
                     "intelligence": 0.0,
                 },
+                "choices": 0,
             }
         }
 

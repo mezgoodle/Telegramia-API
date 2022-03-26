@@ -30,6 +30,7 @@ async def create_class(
     - **current user** should be admin
     - **name**: hero class name
     - **characteristics**: dictionary of the class characteristics
+    - **choices**: number of players choices
     """
     return await create_document(hero_class, "classes")
 
@@ -88,6 +89,7 @@ async def update_class(
     - **current user** should be admin
     - **hero_class**: hero class name
     - **characteristics**: dictionary of the class characteristics
+    - **choices**: number of players choices
     """
     variables = locals()
     options = {"identifier": "_id", "class_name": "name"}

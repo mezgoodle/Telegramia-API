@@ -31,6 +31,7 @@ def test_post_class():
                 "intuition": 0,
                 "intelligence": 0,
             },
+            "choices": 0,
         },
         headers={"Authorization": f"Bearer {access_token}"},
     )

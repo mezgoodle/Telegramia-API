@@ -195,6 +195,7 @@ class HeroClassModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
     characteristics: dict = Field(...)
+    choices: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -209,6 +210,7 @@ class HeroClassModel(BaseModel):
                     "intuition": 0.0,
                     "intelligence": 0.0,
                 },
+                "choices": 0,
             }
         }
 
