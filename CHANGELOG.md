@@ -1,3 +1,10 @@
+# 1.2.3 (01.04.22)
+
+- Update **update_object** method in [database.py](https://github.com/mezgoodle/Telegramia-API/blob/master/database.py#L38).
+- Update examples in **Raid** and **RaidLevel** models.
+
+**Full Changelog**: https://github.com/mezgoodle/Telegramia-API/compare/v1.2.2...v1.2.3
+
 # 1.2.2 (26.03.22)
 
 - Update **Road**, **Item**, **Horse** and **HeroClass** models with the field with common meaning.
