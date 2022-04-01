@@ -49,6 +49,8 @@ async def update_object(
 
         if update_result.modified_count == 1:
             if (updated_object := update_result.raw_result) is not None:
+                print(update_result.raw_result)
+                print(update_object)
                 return updated_object
         raise HTTPException(status_code=404, detail="Something went wrong")
 
