@@ -48,7 +48,12 @@ async def update_object(
         )
 
         if update_result.modified_count == 1:
-            return JSONResponse(status_code=status.HTTP_200_OK)
+            if list(query.keys())[0] in list(requested_object.keys()):
+                key = list(query.keys())[0]
+                value = requested_object[key]
+                query = {key: value}
+            if (updated_object := await db[collection].find_one(query)) is not None:
+                return updated_object
         raise HTTPException(status_code=404, detail="Something went wrong")
 
     if (existing_object := await db[collection].find_one(query)) is not None:
