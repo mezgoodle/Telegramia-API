@@ -272,8 +272,8 @@ class RaidModel(BaseModel):
         json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
-                "name": "dungeon",
-                "description": "dungeon",
+                "name": "raid",
+                "description": "raid",
                 "members": {
                     "mezgoodle": {"time": "2008-09-15T15:53:00+05:00", "level": 1}
                 },
