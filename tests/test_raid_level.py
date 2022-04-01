@@ -12,7 +12,7 @@ def test_get_raid_levels():
 
 
 def test_get_raid_level():
-    response = client.get("/raid_level?level_name=raid_level")
+    response = client.get("/raid_level?level_name=Обитель сектантів у печері")
     assert response.status_code == 200
 
 
