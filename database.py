@@ -48,8 +48,8 @@ async def update_object(
         )
 
         if update_result.modified_count == 1:
-            if list(query.keys())[0] in list(requested_object.keys()):
-                key = list(query.keys())[0]
+            key = list(query.keys())[0]
+            if key in list(requested_object.keys()):
                 value = requested_object[key]
                 query = {key: value}
             if (updated_object := await db[collection].find_one(query)) is not None:
