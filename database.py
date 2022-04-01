@@ -48,9 +48,7 @@ async def update_object(
         )
 
         if update_result.modified_count == 1:
-            if (updated_object := update_result.raw_result) is not None:
-                print(f"Props: {update_result.__dict__}")
-                return updated_object
+            return JSONResponse(status_code=status.HTTP_200_OK)
         raise HTTPException(status_code=404, detail="Something went wrong")
 
     if (existing_object := await db[collection].find_one(query)) is not None:
