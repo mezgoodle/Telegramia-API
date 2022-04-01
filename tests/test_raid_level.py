@@ -25,7 +25,7 @@ def test_post_raid_level():
         "/raid_level",
         json={
             "name": "raid_level1",
-            "raid_name": "raid",
+            "raid_name": "Печера Буйного Вітру",
             "level": 1,
             "description": "dungeon",
             "damage": 1231.213,

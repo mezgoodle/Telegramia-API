@@ -17,7 +17,7 @@ def test_get_raidlevels():
 
 
 def test_get_raid():
-    response = client.get("/raid?raid_name=raid")
+    response = client.get("/raid?raid_name=Печера Буйного Вітру")
     assert response.status_code == 200
 
 
